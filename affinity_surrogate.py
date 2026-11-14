@@ -1,7 +1,12 @@
 """Affinity surrogate — rank HER2 designs by a model trained on the REAL measurements,
 not by fold confidence (ipTM is a weak affinity proxy).
 
-Two heads on one-hot CDRH3 features (the field guide notes one-hot often works):
+Two heads on one-hot CDRH3 features (the field guide notes one-hot often works).
+Encoding: fixed L=12 window, 20 aa + gap channel per slot. First ceil(n/2) residues fill slots
+from the N-terminus, the rest fill slots from the C-terminus (CDRH3 is anchored at both ends),
+gap in the middle. Handles 9-12-mers without truncation; >12 keeps 6+6 ends. 10-mers are
+equivalent to the old position-wise encoding.
+
   * affinity regressor : Ridge on log10(KD) from the SPR-quantified variants (~190 rows).
   * binder classifier  : LogisticRegression on the 525k FACS classes (high vs rest).
 
@@ -22,18 +27,27 @@ HERE = Path(__file__).resolve().parent
 DATA = HERE / "data" / "her2"
 AA = "ACDEFGHIKLMNPQRSTVWY"
 IDX = {a: i for i, a in enumerate(AA)}
-L = 10                                   # trastuzumab CDRH3 length
+L = 12                                   # window; covers CDRH3 of 9-12 (longer is clipped in the middle)
 DROP_CDRH3 = {"ARDRIVDDYYYYGMDV"}        # 8 non-trastuzumab SPR rows (README caveat)
 SEED = 1
 
 
 def onehot(cdrh3: str) -> np.ndarray:
-    cdrh3 = cdrh3.strip().upper()[:L].ljust(L, "-")
-    v = np.zeros(L * len(AA), dtype=np.float32)
-    for i, a in enumerate(cdrh3):
+    c = cdrh3.strip().upper()
+    h = (len(c) + 1) // 2
+    if len(c) > L:
+        c = c[:L // 2] + c[-(L // 2):]
+        h = L // 2
+    n = len(c)
+    slots = list(range(h)) + list(range(L - (n - h), L))   # N-anchored head, C-anchored tail, gap between
+    W = len(AA) + 1
+    v = np.zeros(L * W, dtype=np.float32)
+    v[len(AA)::W] = 1.0                                    # gap channel default
+    for i, a in zip(slots, c):
         j = IDX.get(a)
         if j is not None:
-            v[i * len(AA) + j] = 1.0
+            v[i * W + len(AA)] = 0.0
+            v[i * W + j] = 1.0
     return v
 
 
