@@ -9,6 +9,7 @@ from pathlib import Path
 import novelty_filter as nf
 from affinity_surrogate import AffinitySurrogate
 from epitope_check import preservation
+from thermostability import stability_score
 
 HERE = Path(__file__).resolve().parent
 FACS = HERE / "data/her2/tz_her2_facs_3classes_524346.csv.zip"
@@ -23,6 +24,7 @@ W_HOTSPOT = 0.25          # bonus per hit of the 4 hotspots (C572/C573/D591/D593
 EPITOPE_MIN_RECALL = 0.3  # below this: epitope penalty
 EPITOPE_PENALTY = 1.0
 W_IPTM = 0.2              # tiny tie-break: * (iptm - IPTM_FLOOR)
+W_STABILITY = 0.75        # penalise destabilising loops: -W * (1 - stability_score)
 MIN_DIST = 2              # diversity: min CDRH3 hamming between two picks
 
 
@@ -71,6 +73,9 @@ def rank(cands, top_n=TOP_N, surrogate=None):
                 note += " [off-epitope penalty]"
         else:
             note += ", no structure (epitope unchecked)"
+        stab = stability_score(r["cdrh3"])
+        score -= W_STABILITY * (1.0 - stab)
+        note += f", stability {stab:.2f}"
         if r["_iptm"] is not None:
             score += W_IPTM * (r["_iptm"] - IPTM_FLOOR)
         r["final_score"], r["_note"] = round(score, 3), note
