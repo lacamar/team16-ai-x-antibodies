@@ -55,3 +55,22 @@ Notes
 - Requires the VM (`~/.ssh/team-16`), GPU is shared: check it is free; keep K small.
 - Needs `~/lachlan/rfd4-docs/runs/opt/prepared/holo/template.cif` on the VM; change `TPL` in the script if moved.
 - Verified end-to-end with K=2 (1m43s): prep -> fold -> metrics -> candidates -> rank.
+
+## Verified end-to-end (2026-11-14) — real IgLM run
+
+IgLM installed and ran on CPU; 120 CDRH3 infills scored by `reward.py`. The generate→score loop works.
+
+**Install (teammate — important):**
+- `uv pip install iglm`, then **pin `transformers<5`** — transformers 5.x breaks IgLM's tokenizer (every residue → `[UNK]`, `infill` asserts). reward.py also needs `scikit-learn scipy gemmi`. Weights auto-download on first `IgLM()`. CPU ~3 seqs/s.
+
+**Call:**
+```python
+from iglm import IgLM
+m = IgLM()
+vhs = m.infill(VH, "[HEAVY]", "[HUMAN]", (98, 108), num_to_generate=40, top_p=1, temperature=1.0)
+# CDRH3 = v[98 : len(v) - (len(VH) - 108)]  (variable length). (98,108) = WGGDGFYAMD in trastuzumab VH.
+```
+
+**Result (base IgLM, NO fine-tune):** 114/120 passed novelty, all unique, 0 regenerated trastuzumab (6 gated for odd Cys). BUT every sample was `ood=True` and rewards were low (best −0.51, most −2 to −4): base IgLM loops are unlike the 524k, so the surrogate extrapolates and rates them poorly.
+
+**Implication (the key insight):** base IgLM is not HER2-biased. The loop MUST fine-tune IgLM (on the 524k, then on the round's high-reward designs) to pull generation into the surrogate's trusted distribution — that is what turns the reward into real optimisation. Drop gated (−10) sequences from every fine-tune set.
