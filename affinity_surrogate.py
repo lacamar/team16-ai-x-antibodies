@@ -67,7 +67,7 @@ class AffinitySurrogate:
         self.reg = None    # log10 KD regressor (lower = tighter)
         self.clf = None    # P(high binder)
 
-    def fit(self, facs_cap=150_000):
+    def fit(self, facs_cap=None):   # None = train on all 524,346 FACS rows
         from sklearn.linear_model import RidgeCV, LogisticRegression
         Xs, ys = load_spr()
         self.reg = RidgeCV(alphas=np.logspace(-2, 3, 12)).fit(Xs, ys)
