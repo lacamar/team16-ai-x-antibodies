@@ -1,0 +1,268 @@
+<title>Team 16 Field Map</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: a vertical scroll of panels; the pipeline funnel is the hero, flanked by task + environment + live-result cards. */
+:root{
+  --bg:#f4f3ef; --surface:#ffffff; --surface-2:#eceae3; --line:#dcd9cf;
+  --fg:#20221f; --muted:#64655d; --faint:#97968b;
+  --accent:#0d8f84; --accent-ink:#0a6b63; --accent-soft:#d2ebe7;
+  --gen:#5b8def; --fold:#9b6ddb; --score:#0d8f84; --filter:#c97b1f; --submit:#1aa06d;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --head:"Space Grotesk",var(--sans);
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#161815; --surface:#1e211d; --surface-2:#262a25; --line:#353a33;
+  --fg:#e9e8e2; --muted:#a2a399; --faint:#6d6e66;
+  --accent:#30c3b5; --accent-ink:#5bd8cb; --accent-soft:#17332f;
+  --gen:#78a1f0; --fold:#b48ae6; --score:#30c3b5; --filter:#dca24a; --submit:#3fc98c;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#161815; --surface:#1e211d; --surface-2:#262a25; --line:#353a33;
+  --fg:#e9e8e2; --muted:#a2a399; --faint:#6d6e66;
+  --accent:#30c3b5; --accent-ink:#5bd8cb; --accent-soft:#17332f;
+  --gen:#78a1f0; --fold:#b48ae6; --score:#30c3b5; --filter:#dca24a; --submit:#3fc98c;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.5;margin:0;font-size:15px}
+.wrap{max-width:1120px;margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:30px;display:flex;flex-direction:column;gap:20px}
+h1,h2,h3{font-family:var(--head);margin:0;font-weight:600;letter-spacing:-0.01em;text-wrap:balance}
+h1{font-size:clamp(1.6rem,4.5vw,2.3rem)}
+h2{font-size:1.05rem;display:flex;align-items:center;gap:8px}
+.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.mono{font-family:var(--mono)}
+.muted{color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;min-width:0}
+.grid{display:grid;gap:14px}
+
+/* header */
+.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:14px;border-bottom:1px solid var(--line);padding-bottom:18px}
+.top .lead{display:flex;flex-direction:column;gap:7px;min-width:0}
+.mission{font-size:1.02rem;color:var(--muted);max-width:60ch}
+.mission b{color:var(--fg)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-family:var(--mono);
+  background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 11px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--submit)}
+.theme-btn{background:var(--surface);border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:6px 10px;font:inherit;font-size:.8rem;cursor:pointer}
+
+/* task row */
+.task{grid-template-columns:1.1fr 1fr 1fr 1.1fr}
+.tag{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);display:block;margin-bottom:6px}
+.big{font-family:var(--head);font-size:1.15rem;font-weight:600}
+.task ul{margin:6px 0 0;padding-left:16px;font-size:.84rem;color:var(--muted);display:flex;flex-direction:column;gap:3px}
+.tier{display:flex;gap:6px;margin-top:8px}
+.tier span{flex:1;text-align:center;font-family:var(--mono);font-size:.72rem;border:1px solid var(--line);border-radius:7px;padding:4px 0;color:var(--muted)}
+.tier span b{display:block;color:var(--fg);font-size:.82rem}
+
+/* funnel */
+.funnel-wrap{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+.funnel{display:flex;gap:0;align-items:stretch;overflow-x:auto;padding-bottom:4px}
+.stage{flex:1 1 0;min-width:148px;display:flex;flex-direction:column;gap:5px;padding:14px 12px;position:relative;
+  border:1px solid var(--line);border-radius:11px;background:var(--surface-2);margin-right:20px}
+.stage:last-child{margin-right:0}
+.stage::after{content:"";position:absolute;right:-20px;top:50%;width:20px;height:2px;background:var(--line)}
+.stage:last-child::after{display:none}
+.stage .n{font-family:var(--mono);font-size:.72rem;color:var(--faint)}
+.stage .name{font-family:var(--head);font-weight:600;font-size:1rem;display:flex;align-items:center;gap:7px}
+.stage .name::before{content:"";width:9px;height:9px;border-radius:50%;flex:none;background:var(--c)}
+.stage .tool{font-family:var(--mono);font-size:.72rem;color:var(--accent-ink);overflow-wrap:anywhere}
+.stage .out{font-size:.78rem;color:var(--muted)}
+.funnel-note{margin-top:12px;font-size:.82rem;color:var(--muted);display:flex;gap:8px;align-items:baseline}
+.funnel-note b{color:var(--fg)}
+
+/* two columns */
+.two{grid-template-columns:1fr 1fr}
+.env h3{font-family:var(--head);font-size:1rem;margin-bottom:2px}
+.env .where{font-family:var(--mono);font-size:.74rem;color:var(--faint);margin-bottom:8px}
+.pill-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.pill{font-family:var(--mono);font-size:.7rem;background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:3px 8px;color:var(--muted)}
+
+/* live result */
+.live h2 .dot{width:9px;height:9px}
+table{width:100%;border-collapse:collapse;font-size:.84rem;margin-top:10px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+th{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);font-weight:500}
+td.m{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.seq{font-family:var(--mono);font-size:.8rem;overflow-wrap:anywhere}
+.tbl-scroll{overflow-x:auto}
+.good{color:var(--submit);font-weight:600}
+
+/* data + metrics */
+.stat{display:flex;flex-direction:column;gap:2px}
+.stat .v{font-family:var(--head);font-size:1.5rem;font-weight:600;font-variant-numeric:tabular-nums}
+.stat .k{font-size:.78rem;color:var(--muted)}
+.rule{font-size:.84rem;color:var(--muted)}
+.rule code{font-family:var(--mono);background:var(--surface-2);padding:1px 5px;border-radius:5px;color:var(--fg);font-size:.82em}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.legend span{font-size:.8rem;font-family:var(--mono);color:var(--muted)}
+.legend b{color:var(--fg)}
+.foot{color:var(--faint);font-size:.76rem;text-align:center;padding-top:6px}
+@media (max-width:860px){.task,.two{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.task,.two{grid-template-columns:1fr}}
+</style>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<div class="wrap">
+  <div class="top">
+    <div class="lead">
+      <span class="eyebrow">AI × Antibodies · Oslo · Team 16</span>
+      <h1>Field Map</h1>
+      <p class="mission">Design antibody variants that bind <b>HER2</b> better than <b>trastuzumab</b> — generate them, fold them against the target, score and filter them, and submit the best. This page is the whole landscape on one screen.</p>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span class="chip"><span class="dot"></span>pipeline live</span>
+      <button class="theme-btn" id="theme" title="Toggle theme">◐</button>
+    </div>
+  </div>
+
+  <!-- TASK -->
+  <div class="grid task">
+    <div class="card">
+      <span class="tag">The target</span>
+      <div class="big">HER2</div>
+      <ul>
+        <li>beat <span class="mono">trastuzumab</span> (the approved anti-HER2 Ab)</li>
+        <li>reference complex <span class="mono">PDB 1N8Z</span></li>
+        <li>its CDRH3 = <span class="mono">WGGDGFYAMD</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">Track A · optimise</span>
+      <div class="big">stay close</div>
+      <ul>
+        <li>&lt;70% CDRH3 identity to trastuzumab</li>
+        <li>&ge;3 changes in the loop</li>
+        <li>&ge;2 muts from known seqs</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">Track B · de novo</span>
+      <div class="big">go new</div>
+      <ul>
+        <li>&lt;70% identity to <em>any</em> known Ab</li>
+        <li>VHH / scFv / Fab allowed</li>
+        <li>separate prize from Track A</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">How you win</span>
+      <div class="big">3 properties</div>
+      <ul>
+        <li>SPR affinity &ge; baseline</li>
+        <li>epitope preserved (competitive)</li>
+        <li>thermostability</li>
+      </ul>
+      <div class="tier">
+        <span><b>S</b>3/3</span><span><b>A</b>2/3</span><span><b>B</b>1/3</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FUNNEL -->
+  <div class="funnel-wrap">
+    <h2>The pipeline — candidates fall through gates</h2>
+    <div class="funnel" style="margin-top:14px">
+      <div class="stage" style="--c:var(--gen)"><span class="n">100s</span><span class="name">Generate</span><span class="tool">RFD4-Proteina · HER2 weights</span><span class="out">new CDRH3 variants on the framework</span></div>
+      <div class="stage" style="--c:var(--gen)"><span class="n">top 20</span><span class="name">Prepare</span><span class="tool">refold-prepare</span><span class="out">build binder+HER2 fold inputs</span></div>
+      <div class="stage" style="--c:var(--fold)"><span class="n">fold</span><span class="name">Co-fold</span><span class="tool">Boltz-2 · OpenFold3</span><span class="out">binder–HER2 complex + confidence</span></div>
+      <div class="stage" style="--c:var(--score)"><span class="n">rank</span><span class="name">Score</span><span class="tool">refold-score</span><span class="out">iptm · min_ipae · binder_plddt</span></div>
+      <div class="stage" style="--c:var(--filter)"><span class="n">cut</span><span class="name">Filter</span><span class="tool">novelty_filter.py</span><span class="out">novelty + no unpaired Cys + len ≤250</span></div>
+      <div class="stage" style="--c:var(--submit)"><span class="n">≤20</span><span class="name">Submit</span><span class="tool">Adaptyv · SPR</span><span class="out">4 tested regardless + judged slots</span></div>
+    </div>
+    <div class="funnel-note"><b>Rule of thumb:</b> every stage throws candidates away, so start wide. Filter <em>before</em> ranking — known binders fail novelty.</div>
+  </div>
+
+  <!-- ENVIRONMENTS -->
+  <div class="grid two">
+    <div class="card env">
+      <h3>Nebius Scientific AI</h3>
+      <div class="where">your laptop · forge.py over HTTPS · 34 models</div>
+      <p class="rule">Fast iteration and the models the VM doesn't have. Submit, wait, fetch — results carry run ids for provenance.</p>
+      <div class="pill-row">
+        <span class="pill">boltz2</span><span class="pill">antifold</span><span class="pill">nanobodybuilder2</span>
+        <span class="pill">proteinmpnn</span><span class="pill">stab-ddg ΔΔG</span><span class="pill">msa-search</span>
+      </div>
+    </div>
+    <div class="card env">
+      <h3>Apheris Foundry VM</h3>
+      <div class="where">H100 80GB · docker images · no login needed</div>
+      <p class="rule">Where the <b>HER2-tuned</b> design models live. Runs locally on the GPU; dies Saturday night — copy results off.</p>
+      <div class="pill-row">
+        <span class="pill">rfd4 her2-2026-11-07</span><span class="pill">rfd4 her2-novel</span><span class="pill">openfold3</span>
+        <span class="pill">boltz-2</span><span class="pill">protenix</span><span class="pill">esmfold2</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- VM RESOURCES -->
+  <div class="card">
+    <h2>The machine — one H100 box, shared by the team</h2>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(128px,1fr));margin-top:12px;gap:14px">
+      <div class="stat"><span class="v">H100</span><span class="k">80 GB HBM3 · CUDA 13 · cc 9.0</span></div>
+      <div class="stat"><span class="v">16</span><span class="k">vCPU · Xeon Platinum 8468</span></div>
+      <div class="stat"><span class="v">196 GB</span><span class="k">RAM</span></div>
+      <div class="stat"><span class="v">363 GB</span><span class="k">free disk (of 484, shared)</span></div>
+      <div class="stat"><span class="v">10 GB</span><span class="k">private S3 bucket</span></div>
+    </div>
+    <p class="rule" style="margin-top:12px"><b>One GPU, ~5 of you.</b> Jobs queue on the single H100 — stagger long runs, keep a folder each (<code>~/yourname</code>), and copy results off before the VM shuts down Saturday night. ~105 GB of Foundry model images are already pulled. Also on tap: Nebius hosted models + Claude Max credits, <code>s3://apheris-oslo-hackathon</code> (~5 GB data), JapanFold, AMASS ($100).</p>
+  </div>
+
+  <!-- LIVE RESULT -->
+  <div class="card live">
+    <h2><span class="dot"></span>It works — a real run on the H100</h2>
+    <p class="muted" style="margin:6px 0 0;font-size:.86rem">Full pipeline (generate → co-fold → score) on the de-novo weights. Two designs, both binding HER2 with high confidence:</p>
+    <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>design</th><th>new CDRH3</th><th>ipTM ↑</th><th>min_ipae ↓</th><th>binder_pLDDT ↑</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">her2_cdrh3_3</td><td class="seq">WASSSEYYFDY</td><td class="m good">0.972</td><td class="m good">0.310</td><td class="m">98.5</td></tr>
+        <tr><td class="mono">her2_cdrh3_2</td><td class="seq">WGPPYFYAMDY</td><td class="m">0.961</td><td class="m">0.331</td><td class="m">95.6</td></tr>
+        <tr><td class="mono muted">trastuzumab</td><td class="seq muted">WGGDGFYAMD</td><td class="m muted">— baseline —</td><td class="m muted"></td><td class="m muted"></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- DATA + METRICS -->
+  <div class="grid two">
+    <div class="card">
+      <h2>What we're given</h2>
+      <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:12px;gap:14px">
+        <div class="stat"><span class="v">525,063</span><span class="k">provided CDRH3 sequences — the novelty-filter set</span></div>
+        <div class="stat"><span class="v">768</span><span class="k">SPR-measured variants with real K<sub>D</sub></span></div>
+      </div>
+      <p class="rule" style="margin-top:12px"><b>Novelty rule:</b> a CDRH3 passes if it differs at <code>≥2/10</code> positions from <em>every</em> provided sequence and <code>≥3/10</code> from trastuzumab. Plus <code>len ≤ 250</code> and no odd cysteine count. Built + validated in <code>novelty_filter.py</code>.</p>
+    </div>
+    <div class="card">
+      <h2>Reading the scores</h2>
+      <p class="rule" style="margin-top:10px">Fold-confidence numbers rank designs — they are <b>not</b> affinity. The lab (SPR) decides affinity.</p>
+      <div class="legend">
+        <span><b>ipTM</b> ↑ interface placement confidence (0–1)</span>
+        <span><b>min_ipae</b> ↓ interface error, Å</span>
+        <span><b>binder_pLDDT</b> ↑ binder fold confidence (0–100)</span>
+      </div>
+      <p class="rule" style="margin-top:12px">Rank on <code>min_ipae</code> then <code>iptm</code>, and only <em>within one folding model</em>. Score the trastuzumab baseline through the same gates as the control to beat.</p>
+    </div>
+  </div>
+
+  <div class="foot">Team 16 · one-day orientation map · the repo (BUILD_SPEC, VM-RUN, novelty_filter) has the detail</div>
+</div>
+
+<script>
+(function(){
+  try{var t=localStorage.getItem("fm-theme"); if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}
+  document.getElementById("theme").onclick=function(){
+    var cur=document.documentElement.getAttribute("data-theme");
+    var next=cur==="dark"?"light":cur==="light"?"dark":(matchMedia("(prefers-color-scheme:dark)").matches?"light":"dark");
+    document.documentElement.setAttribute("data-theme",next);
+    try{localStorage.setItem("fm-theme",next);}catch(e){}
+  };
+})();
+</script>

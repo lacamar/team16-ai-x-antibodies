@@ -1,0 +1,69 @@
+digraph project {
+  rankdir=LR; bgcolor="#f5f4f0"; compound=true; splines=spline; nodesep=0.28; ranksep=0.9;
+  labelloc="t"; fontname="Helvetica-Bold"; fontsize=20;
+  label="Team 16 — AI × Antibodies — project structure (HER2 / trastuzumab)";
+  node [fontname="Helvetica", fontsize=11, shape=box, style="filled,rounded", fillcolor="white", color="#c9c6bd", margin="0.12,0.07"];
+  edge [fontname="Helvetica", fontsize=9, color="#7d7a72"];
+
+  subgraph cluster_laptop {
+    label="LAPTOP  (Fedora, aarch64)"; style="filled,rounded"; fillcolor="#e9edf6"; color="#8fa6d4"; fontname="Helvetica-Bold";
+    l_repo  [label="team16-ai-x-antibodies\n(local clone)"];
+    forge   [label="forge.py  →  Nebius", fillcolor="#eef6ee"];
+    keys    [label=".keys/  (gitignored)\ncreds · JapanFold code", fillcolor="#fdf1d3"];
+    sshkey  [label="~/.ssh/team-16  (VM key)", fillcolor="#fdf1d3"];
+  }
+
+  subgraph cluster_gh {
+    label="GITHUB  (private repo)"; style="filled,rounded"; fillcolor="#eceae3"; color="#b7b2a4"; fontname="Helvetica-Bold";
+    r_readme [label="README · CLAUDE.md · CONTRIBUTORS"];
+    r_spec   [label="docs/BUILD_SPEC.md\n(HER2 single-funnel pipeline)", fillcolor="#eaf3f1"];
+    r_guide  [label="docs/GUIDE_DISTILLED.md\ndocs/VM-RUN.md · pitch.md", fillcolor="#eaf3f1"];
+    r_filter [label="novelty_filter.py\n(abguard replacement, validated)", fillcolor="#eaf3f1"];
+    r_task   [label="task-material/\nApheris PDF · Nebius tooling"];
+  }
+
+  subgraph cluster_vm {
+    label="APHERIS VM  —  H100 80GB · 16 vCPU · 196 GB"; style="filled,rounded"; fillcolor="#efeaf3"; color="#a98fc9"; fontname="Helvetica-Bold";
+    v_repo  [label="~/team16-ai-x-antibodies\n(clone)"];
+    v_work  [label="~/lachlan/  (working dir)\nrfd4-docs · data/her2"];
+    subgraph cluster_imgs {
+      label="Foundry docker images (105 GB)"; style="filled,rounded"; fillcolor="#f6f1fb"; color="#c9b3e0"; fontsize=10;
+      m_rfd  [label="RFD4-Proteina\nher2 · her2-novel", fillcolor="#efe3fb"];
+      m_fold [label="Boltz-2 · OpenFold3\nProtenix · ESMFold2", fillcolor="#efe3fb"];
+    }
+    subgraph cluster_pipe {
+      label="pipeline (runs on the GPU)"; style="filled,rounded"; fillcolor="#f3eff7"; color="#c9b3e0"; fontsize=10;
+      p1 [label="generate", fillcolor="#dce6fb"];
+      p2 [label="refold-\nprepare", fillcolor="#dce6fb"];
+      p3 [label="co-fold", fillcolor="#e7dcf7"];
+      p4 [label="score\nipTM·ipae·pLDDT", fillcolor="#dcf0e6"];
+      p5 [label="novelty\nfilter", fillcolor="#fbe8cf"];
+      p6 [label="rank →\nsubmit ≤20", fillcolor="#d7f0df"];
+      p1->p2->p3->p4->p5->p6;
+    }
+  }
+
+  subgraph cluster_s3 {
+    label="S3  apheris-oslo-hackathon"; style="filled,rounded"; fillcolor="#eceae3"; color="#b7b2a4"; fontname="Helvetica-Bold";
+    s_her2 [label="her2-trastuzumab/\nFACS 525k · SPR 768 (KD)", fillcolor="#eaf3f1"];
+    s_docs [label="rfd4-proteina/docs/\n1N8Z · her2_cdrh3.yaml"];
+    s_big  [label="zenodo + sigma2 (~5 GB)\noptional: surrogate / calib", style="filled,dashed,rounded", fillcolor="#f3f1ea"];
+  }
+
+  subgraph cluster_neb {
+    label="NEBIUS Scientific AI"; style="filled,rounded"; fillcolor="#eef6ee"; color="#8fc49a"; fontname="Helvetica-Bold";
+    n_models [label="34 hosted models\nstab-ddg(ΔΔG) · antifold\nnanobodybuilder2 · msa"];
+  }
+
+  // flows
+  l_repo -> r_readme [label="git push", ltail=cluster_laptop, lhead=cluster_gh, color="#5b8def", penwidth=1.6];
+  r_readme -> v_repo [label="git clone/pull", lhead=cluster_vm, ltail=cluster_gh, color="#5b8def", penwidth=1.6];
+  sshkey -> v_work [label="ssh", color="#9b6ddb", style=dashed];
+  forge -> n_models [label="https", color="#1aa06d", penwidth=1.4];
+  s_her2 -> v_work [label="aws s3 sync", color="#c97b1f", penwidth=1.4];
+  s_docs -> v_work [color="#c97b1f"];
+  m_rfd -> p1 [style=dotted, color="#a98fc9"];
+  m_fold -> p3 [style=dotted, color="#a98fc9"];
+  v_work -> p1 [style=dotted, color="#999999"];
+  s_her2 -> p5 [label="novelty set", color="#c97b1f", style=dashed, constraint=false];
+}
