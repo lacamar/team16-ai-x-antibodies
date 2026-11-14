@@ -1,167 +1,109 @@
-# BUILD SPEC — spin up the Team 16 repo + pipeline
+# BUILD SPEC — Team 16 HER2 binder pipeline
 
-**Who reads this:** a Claude Code session, on the day, right after the 09:30 brief.
-**What to do:** build the repo and a modular, reproducible candidate-evaluation pipeline, then stop and let the team fill in the real target and gates.
+**Who reads this:** a Claude Code session building the repo on the day.
+**What to do:** build a modular, reproducible pipeline that designs and ranks antibody variants that bind **HER2** better than **trastuzumab**, then stop and let the team tune the gates.
+
+Mirrors our grant pipeline: a **declared graph of discrete gates**, each a self-contained, reproducible step with a fixed input→output contract. The things flowing through are **candidate antibody designs**.
+
+---
+
+## The task (fixed — confirm against the official 09:30 brief)
+
+Improve **trastuzumab** (the anti-HER2 antibody). The target is given; there is no target-selection step. Two tracks (a candidate declares one):
+
+- **Optimisation:** CDRH3 < 70% identity to trastuzumab, AND > 2 point mutations from any provided antibody.
+- **De novo:** < 70% identity to any known antibody, AND ≥ 2 CDRH3 mutations from trastuzumab.
+
+**Judged properties (each improved vs the trastuzumab baseline → tiers S/A/B by how many improve):**
+1. **Affinity** — SPR KD ≥ baseline (tighter).
+2. **Epitope preservation** — still binds the trastuzumab epitope (competitive binding).
+3. **Thermostability.**
+
+**Hard filters (`abguard` CLI, on the Apheris VM — a pass/fail gate):** must be VHH / scFv / Fab; no unpaired cysteine; numbering confidence ≥ 0.1; total length ≤ 250 aa.
+
+**Submission:** a ranked list of **up to 20 designs** (16 + 4 spare). 4 are tested regardless of rank. Reference complex: **PDB 1N8Z** (trastuzumab Fab–HER2) for the epitope, baseline, and co-fold template.
+
+**Pitch scoring:** Judgment 40% · Execution 20% (reproducible GitHub repo) · User fit 20% · Path to value 20%.
+
+---
 
 ## Ground rules (contest hygiene)
 
-- **Private repo.** `--private`. Judges get access when asked, not a public link.
-- **Nothing before the day.** The repo is born on the day: no repo, no commit, no push exists before **09:00, 14 Nov 2026**. Every commit and author date must be ≥ 09:00. Author the code **fresh in the new repo today** — do not import or commit any file created earlier (git doesn't store file mtimes, so a fresh commit today is clean regardless of a file's age on disk). Prep material on this machine is reference only.
-
-The design mirrors our grant pipeline (`creatorbrunchclub/tools/grants`): a **declared graph of discrete nodes**, each a self-contained step with a fixed input→output contract, runnable and inspectable on its own. Here the nodes are **gates** and the things flowing through them are **candidate nanobodies**.
-
----
+- **Private repo.** Judges get access when asked.
+- **Nothing before 09:00, 14 Nov 2026.** Every commit/author date ≥ 09:00. Author fresh; never commit a pre-existing file. Keys stay in gitignored `.keys/` — never committed.
 
 ## Core principle
 
-A candidate flows through a pipeline of **gates**. Each gate reads candidates in, adds scores and a pass/fail verdict, writes candidates out. Every gate is a **reproducible programmatic step** — deterministic code, pinned model versions, fixed seeds, cached I/O. **No LLM inside a gate** (LLM output isn't reproducible). The LLM's job is *around* the pipeline — proposing approaches, writing reasoning, driving the tools — never scoring a candidate.
+Candidates flow through **gates**. Each gate reads candidates, adds scores + a pass/fail verdict, writes candidates out. Every gate is a **reproducible programmatic step** — deterministic, pinned model weights + seeds, cached I/O. **No LLM inside a gate.** The LLM proposes strategies, writes reasoning and the pitch — it never scores a candidate.
 
-Three rules, non-negotiable:
-1. **Reproducible:** `just all` reproduces the whole run from a tagged commit, offline, from cache, with no LLM in the loop.
-2. **Modular:** adding an evaluation = one new gate file + one line in the graph. Nothing else changes.
-3. **Legible:** `just graph` prints the pipeline so anyone can see, in one screen, what runs in what order and what each gate reads and writes.
+Three rules: **Reproducible** (`just all` reruns from a tagged commit, from cache); **Modular** (add an evaluation = one gate file + one line in the graph); **Legible** (`just graph` prints the whole pipeline + each gate's reads/writes).
 
 ---
 
-## Two funnels: validate the problem, then the solution
+## Two compute environments
 
-A nanobody has to bind *something worth binding*. So the pipeline is **two funnels in series**, each the same generate → gate → rank → pick shape.
-
-**Funnel 1 — Target validation (the "why").** Candidates are *(disease, target)* pairs. Gates keep only a prevalent disease with a well-established, antibody-tractable target that has a usable structure. Reproducible and programmatic — it runs off structured databases, not opinion:
-
-| Gate | Question | Reproducible source (public API, cacheable) |
+| | Nebius Scientific AI | Apheris Foundry VM (H100) |
 |---|---|---|
-| burden | Is the disease prevalent — not n-of-1? | GBD / Our World in Data / WHO (prevalence, DALYs) |
-| association | Is the target–disease link well established? | Open Targets association score + evidence classes |
-| tractability | Reachable by an antibody (extracellular), with precedent? | Open Targets tractability; existing approved mAbs |
-| structure | Is there a usable antigen structure + a defined epitope? | PDB / UniProt / AlphaFold DB |
+| Where | your laptop, `forge.py` (set up, verified) | per-team VM over SSH (IP + key given at the event) |
+| Run via | `python3 forge.py run/submit <model>` | `foundry-toolkit` (Docker images) + `abguard` |
+| Creds | `NEBIUS_CREDS` → `.keys/credentials.private.json` | VM-local read-only `s3://apheris-oslo-hackathon` |
+| Strengths | fast iteration, 34 models, `stab-ddg` (ΔΔG), MSA, nanobodybuilder2, antifold | **HER2-tuned RFD4-Proteina**, OpenFold3/Protenix/Boltz-2 with iptm/min_ipae, `abguard` |
+| Ephemeral? | hosted | **dies Sat night — copy results off** |
 
-Output: **one target dossier** — disease, UniProt target, antigen structure, chosen epitope, and the scores/evidence behind the pick. That dossier is the input to Funnel 2, *and* it is most of the User-fit (20%) and Path-to-value (20%) story plus the reasoning that earns Judgment (40%). Most teams skip this — it's where the points are.
-
-**Funnel 2 — Binder validation (the "what").** Candidates are nanobodies, conditioned on the dossier's epitope/structure. The two filters the team named:
-- **Plausibly binds** — co-fold the binder against the *validated* antigen; score interface quality and whether it hits the intended epitope (contacts, clashes, ipSAE, ipTM). Confidence ≠ affinity; use controls.
-- **Plausibly manufacturable** — developability: expression, solubility/aggregation, chemical liabilities, stability, germline-ness. All programmatic.
-
-Output: ≤10 binders, each with a reason, against a target that was itself justified.
-
-The LLM drafts the dossier narrative and the pitch *from* the fetched evidence; it never sets a gate verdict. (Confirm each data source is reachable on the day; cache every response so a rerun is offline and identical.)
+**Prize-relevant:** RFD4-Proteina HER2 weights on the VM — `her2-2026-11-07` (trastuzumab CDRH3 redesign; `--sequence-tsr-k 2` balanced, `1` exploratory) and `her2-novel-2026-11-09` (mostly-new CDRH3, ~86% pass novelty). A step-by-step HER2 script + `Tutorial.html` live in the bucket under `rfd4-proteina/docs/`. (Verify any "must use Apheris OpenFold" prize rule with the organizers.)
 
 ---
 
-## Day-0 steps (do these in order)
+## The funnel (single — the target is fixed)
 
-1. Work in a **fresh empty directory** (e.g. `~/.local/src/team16-antibodies`), **not** the prep workspace — so nothing pre-written is ever swept into a commit. Copy only this spec and `CONTRIBUTORS.md` in as reference. Then `git init`; create a **private GitHub repo** (`gh repo create team16-antibodies --private --source=. --remote=origin`). Add the handles in `CONTRIBUTORS.md` as collaborators: `gh repo edit --add-collaborator <handle>` (or via the web UI).
-2. Scaffold the layout below, **authored fresh in the new repo today**. Reference patterns (the gate contract, provenance columns, `disk_cache`) are described in this spec — write them anew; do not commit any pre-existing file.
-3. Fill `config.toml` with the **real target** from the brief (antigen, PDB id, epitope, format: VHH/scFv/Fab).
-4. Wire gates **one at a time**, each proven end-to-end on ~20 dummy candidates before the next. Walking skeleton first, real tools second.
-5. Commit after every working gate. Tag the final run commit.
+| Gate | Job | Tooling (pin weights + seed) |
+|---|---|---|
+| `g10_generate` | make candidate sequences for the chosen track | **opt:** RFD4-Proteina `her2-2026-11-07`, or `antifold` CDR redesign on trastuzumab · **de novo:** RFD4-Proteina `her2-novel-2026-11-09`, or rfdiffusion→proteinmpnn |
+| `g20_abguard` | **hard filters** — VHH/scFv/Fab, no unpaired Cys, numbering ≥0.1, len ≤250 | `abguard` (VM). Cheap → runs early, before folding |
+| `g25_novelty` | track identity constraints; **drop known binders** before ranking | deterministic sequence/CDRH3 identity vs trastuzumab + known-antibody set |
+| `g30_fold` | co-fold binder + HER2 → complex + interface metrics | Apheris `predict` (OpenFold3/Boltz-2/Protenix → **iptm, min_ipae, binder_plddt**), or Nebius `boltz2`/`openfold3` |
+| `g40_epitope` | binds the **trastuzumab epitope**? (preservation, judged) | overlap of contacts with 1N8Z paratope/epitope; interface quality |
+| `g50_developability` | **thermostability** (judged) + manufacturability | `stab-ddg` (ΔΔG vs baseline), Aggrescan3D, SoluProt, NetSolP, ProteinMPNN soluble, liability-motif regex |
+| `g60_select` | hard gates + composite rank + diversity → **≤20** (16+4) | reason per pick + per rejection |
+| `g90_report` | render tables + provenance from the data | no hand-typed numbers |
 
----
-
-## Repo layout
-
-```
-config.toml              # the target + all knobs (hashed into every result = provenance)
-pipeline.py              # THE GRAPH: ordered list of gates + their deps. The one place the pipeline is defined.
-core.py                  # run ids, git sha, config hash, JSONL io, disk_cache  (reuse from seed)
-gates/
-  # Funnel 1 — target validation (the "why")
-  t10_candidates.py      # assemble candidate (disease, target) pairs
-  t20_burden.py          # disease prevalence / DALYs gate               (GBD / OWID / WHO)
-  t30_association.py     # target-disease association gate                (Open Targets)
-  t40_tractability.py    # antibody-tractable + extracellular + precedent (Open Targets)
-  t50_structure.py       # usable antigen structure + epitope             (PDB / UniProt / AlphaFold)
-  t90_target_select.py   # rank survivors, pick ONE -> target dossier
-  # Funnel 2 — binder validation (the "what"), conditioned on the dossier
-  b10_generate.py        # make nanobody candidates (de novo or redesign)
-  b20_fold.py            # co-fold binder+antigen -> confidence (pLDDT, ipTM, PAE)
-  b30_interface.py       # binding plausibility: interface quality + right epitope (contacts, clashes, ipSAE)
-  b40_developability.py  # manufacturability: expression, solubility, liabilities, stability, germline-ness
-  b50_select.py          # hard gates + composite rank + diversity dedup -> <=10
-  b90_report.py          # render tables + provenance from the data
-runs/<run_id>/           # all artifacts for one run (gitignored except the final tagged one)
-  targets.jsonl          # Funnel 1 candidates, a column per gate
-  target_dossier.json    # the one chosen target + evidence -> input to Funnel 2
-  candidates.jsonl       # Funnel 2 nanobodies, a column per gate
-  gates.jsonl            # one row per (candidate, gate): passed, reason, scorer_version, model_id, seed
-  shortlist.jsonl
-.cache/                  # disk_cache of every external/model call, keyed by input hash
-DECISIONS.md             # why, per choice (Judgment = 40%)
-docs/report.md           # rendered tables (never hand-typed)
-```
-
----
-
-## The gate contract
-
-Every gate is a module in `gates/` exposing exactly:
-
-```python
-GATE = "b30_interface"          # id, matches filename
-READS = ["structure"]           # fields it needs present on a candidate
-WRITES = ["interface_score", "n_contacts", "clashes"]   # fields/scores it adds
-
-def run(cands: list[dict], cfg: dict) -> list[dict]:
-    """Pure function of (cands, cfg). Deterministic. Wrap any external/model
-    call in core.disk_cache so a second run is offline and identical.
-    Append scores to each candidate and emit a gates.jsonl verdict row."""
-    ...
-    return cands
-```
-
-- **Deterministic or it doesn't belong here.** If a step uses a model, pin `model_id` + `seed` and cache by input hash — same input, same output, forever.
-- **A gate that rejects** writes a `verdict` row `{candidate_id, gate, passed:false, reason:"developability: NG motif in CDR3"}` and drops the candidate from the output (but the verdict row survives — negative results are evidence).
-- **Provenance travels with every number:** `scorer`, `scorer_version`, `model_id`, `seed`, `run_id`, `git_sha`, `config_hash`. Set once in `core`, attached by every gate.
+Validation loop RFD4 recommends (inside g30/g40): **refold-prepare → fold with a Predict model → refold-score**, rank on `min_ipae`, `iptm`, `binder_plddt`. `boltz2` output has **no ipTM** — get interface metrics from Apheris `predict`, or count 1N8Z-epitope contacts yourself.
 
 ## The graph (`pipeline.py`)
 
-The whole pipeline is one declared list — the single source of truth, like the grant router's node graph:
-
 ```python
 PIPELINE = [
-    # Funnel 1 — target validation; a go/no-go for the whole project
-    ("t10_candidates",    []),
-    ("t20_burden",        ["t10_candidates"]),
-    ("t30_association",   ["t20_burden"]),
-    ("t40_tractability",  ["t30_association"]),
-    ("t50_structure",     ["t40_tractability"]),
-    ("t90_target_select", ["t50_structure"]),             # -> target_dossier.json
-    # Funnel 2 — binder validation; consumes the dossier
-    ("b10_generate",      ["t90_target_select"]),
-    ("b20_fold",          ["b10_generate"]),
-    ("b30_interface",     ["b20_fold"]),
-    ("b40_developability",["b10_generate"]),               # needs only the sequence
-    ("b50_select",        ["b30_interface", "b40_developability"]),
-    ("b90_report",        ["b50_select"]),
+    ("g10_generate",       []),
+    ("g20_abguard",        ["g10_generate"]),      # hard filter first — cheap
+    ("g25_novelty",        ["g20_abguard"]),
+    ("g30_fold",           ["g25_novelty"]),
+    ("g40_epitope",        ["g30_fold"]),
+    ("g50_developability", ["g25_novelty"]),       # sequence/structure, parallel to fold
+    ("g60_select",         ["g40_epitope", "g50_developability"]),
+    ("g90_report",         ["g60_select"]),
 ]
 ```
+`just graph` prints it and checks every field a gate READS is WRITTEN upstream.
 
-The two funnels are one graph, so `just graph` shows the whole thing and the target dossier is the visible seam between them. Funnel 1 is also the project's **go/no-go**: if no disease–target pair clears its gates, stop and pick a different area rather than designing binders for a weak target.
+## Gate contract
 
-- `just all` runs them in dependency order, piping `runs/<id>/candidates.jsonl` through each.
-- `just gate b30_interface` runs one gate against the current run — the unit of work and of debugging.
-- `just graph` prints the DAG with each gate's READS/WRITES — the "see how it works" view. (Mirror `grants/.../graphmap.py`: it just imports each gate, checks every READS is produced by some upstream WRITES, and errors if the graph is broken.)
+Each gate is a module in `gates/` exposing `GATE`, `READS`, `WRITES`, and `run(run, cfg)` — a deterministic function of (candidates, config). Wrap every `forge.py`/VM/model call in `core.disk_cache` (keyed on input hash) so a rerun is offline and identical. A rejecting gate writes a verdict row `{candidate_id, gate, passed:false, reason}` and drops the candidate — the verdict survives (negative results are evidence). Provenance on every number: `scorer`, `model_id`, `weights`, `seed`, `run_id`, `git_sha`, `config_hash`.
 
----
+## Reproducibility + the baseline
 
-## What goes where: deterministic vs LLM
-
-| Reproducible gate (in `gates/`) | LLM / human work (NOT a gate) |
-|---|---|
-| structure prediction (pinned model+seed) | deciding which target/epitope to go for |
-| interface geometry, clashes, buried area | proposing generation strategies |
-| developability motif/charge/liability scan | writing `DECISIONS.md` and the pitch |
-| composite ranking, diversity dedup, hard gates | reading literature via AMASS |
-| confidence scores (pLDDT/ipTM/PAE/ipSAE) | judging a borderline shortlist pick (then record the reason) |
-
-Confidence scores are **not** affinity — they rank, they don't prove binding. Include positive/negative/baseline controls in the scoring so the numbers mean something.
-
-## Prize + scoring hooks to bake in
-- Put **Apheris' OpenFold** in the fold/score path (required for the cash prize).
-- `b50_select` must emit a **reason per pick and per rejection**, and enforce **diversity** so the 10 aren't near-duplicates.
-- `b90_report` renders the shortlist + scorer-control table straight from the data into `docs/report.md` and the README — no hand-typed numbers.
+- **Score the trastuzumab baseline through the same gates** — it is the control every design must beat (affinity ≥ baseline, epitope preserved, thermostability ↑). Put it in the tables.
+- Pin RFD4 weight tags, model ids, and seeds explicitly — never "latest". Keep `nebius-runs/` (run ids) and `results/` so every number traces to a run.
+- Confidence (iptm/plddt) is **not** affinity; use it to rank, add the baseline + a decoy as controls.
 
 ---
 
-## Definition of done for the skeleton (before real tools)
-`just all` runs g10→g90 on 20 dummy candidates, offline, and produces a shortlist table with provenance and a `just graph` that validates. Commit it. *Then* swap dummy gates for real tools one at a time.
+## Day-0 steps
+
+1. Fresh private repo (`gh repo create … --private`), add collaborators from `CONTRIBUTORS.md`.
+2. `export NEBIUS_CREDS=…/.keys/credentials.private.json`; `forge.py models` to confirm. Get the **Apheris VM SSH** and `foundry-toolkit module list` + `abguard` working; `aws s3 sync s3://apheris-oslo-hackathon/rfd4-proteina ./data` for the HER2 tutorial/script.
+3. Pick the track (config `track`). Pull trastuzumab sequence + **1N8Z**.
+4. Wire gates one at a time, each proven on ~20 dummy candidates (`just all`) before the next. Walking skeleton first; real tools second.
+5. Commit after each working gate; tag the final run.
+
+## Definition of done (skeleton, before real tools)
+`just all` runs g10→g90 on dummy candidates, offline, producing a ranked ≤20 table with provenance + the baseline row, and `just graph` validates. Then swap dummy gates for the real HER2 tools.
