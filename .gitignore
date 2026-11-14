@@ -7,3 +7,5 @@ runs/
 .keys/
 **/credentials*.json
 *codes*.txt
+data/
+*.MOV
