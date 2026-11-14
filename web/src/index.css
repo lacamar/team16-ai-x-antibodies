@@ -1,0 +1,28 @@
+:root{--bg:#f5f6f8;--card:#fff;--fg:#1a1d23;--mut:#6b7280;--bd:#e3e6eb;--ac:#3b6fe0;--g:#15803d;--gb:#dcfce7;--a:#b45309;--ab:#fef3c7;--r:#b91c1c;--rb:#fee2e2}
+:root[data-theme=dark]{--bg:#0f1115;--card:#181b22;--fg:#e6e8ec;--mut:#9aa1ad;--bd:#2a2f3a;--ac:#7aa2ff;--g:#4ade80;--gb:#12301d;--a:#fbbf24;--ab:#3a2c0b;--r:#f87171;--rb:#3b1515}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 system-ui,sans-serif}
+.wrap{max-width:1200px;margin:0 auto;padding:16px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
+h1{font-size:20px;margin:0}h2{font-size:15px;margin:0 0 10px}
+button,select{background:var(--card);color:var(--fg);border:1px solid var(--bd);border-radius:6px;padding:6px 10px;font:inherit;cursor:pointer}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:14px;margin-bottom:16px}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.tile{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:12px}
+.tile.lead{grid-column:1/-1;border-color:var(--ac)}
+.tile b{display:block;font-size:24px}.tile span{color:var(--mut);font-size:12px}
+.two{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--g);margin-right:6px;animation:p 1.5s infinite}
+.dot.off{background:var(--r);animation:none}
+@keyframes p{50%{opacity:.25}}
+.bar{height:8px;background:var(--bd);border-radius:4px;overflow:hidden;margin:4px 0 10px}
+.bar i{display:block;height:100%;background:var(--ac)}
+.mut{color:var(--mut);font-size:12px}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%}
+th,td{padding:6px 8px;text-align:left;border-bottom:1px solid var(--bd);white-space:nowrap}
+th{cursor:pointer;user-select:none;color:var(--mut)}
+td.mono{font-family:ui-monospace,monospace}
+.chip{border-radius:10px;padding:1px 8px;font-size:12px}
+.good{background:var(--gb);color:var(--g)}.mid{background:var(--ab);color:var(--a)}.bad{background:var(--rb);color:var(--r)}
+tr.base{outline:2px solid var(--ac);outline-offset:-2px}
+.err{color:var(--r)}
