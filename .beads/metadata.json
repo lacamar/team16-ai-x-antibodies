@@ -1,0 +1,7 @@
+{
+  "database": "dolt",
+  "backend": "dolt",
+  "dolt_mode": "embedded",
+  "dolt_database": "team16_ai_x_antibodies",
+  "project_id": "e824e629-b2d3-4f0c-a0c7-4ee96de5aa3d"
+}
