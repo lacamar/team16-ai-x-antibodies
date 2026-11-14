@@ -1,0 +1,71 @@
+digraph vm_pipeline {
+  rankdir=LR; bgcolor="#f5f4f0"; compound=true; splines=spline; nodesep=0.3; ranksep=0.85;
+  labelloc="t"; fontname="Helvetica-Bold"; fontsize=20;
+  label="Team 16 — pipeline inside the Apheris VM  (H100 80GB · 16 vCPU · 196 GB)";
+  node [fontname="Helvetica", fontsize=11, shape=box, style="filled,rounded", fillcolor="white", color="#c9c6bd", margin="0.12,0.08"];
+  edge [fontname="Helvetica", fontsize=9, color="#7d7a72"];
+
+  // ---- working dirs on the VM ----
+  subgraph cluster_dirs {
+    label="working dirs  (shared ~ , one GPU)"; style="filled,rounded"; fillcolor="#eceae3"; color="#b7b2a4"; fontname="Helvetica-Bold"; fontsize=12;
+    d_repo [label="~/team16-ai-x-antibodies\nscorers · rank.py · viz/ · web/", fillcolor="#eaf3f1"];
+    d_work [label="~/lachlan/rfd4-docs\nScripts · data/her2 · runs/", fillcolor="#eaf3f1"];
+    d_iglm [label="~/laulau/runs/finetune/best\nfine-tuned IgLM weights", fillcolor="#fdf1d3"];
+  }
+
+  // ---- models / Foundry docker images ----
+  subgraph cluster_models {
+    label="models  ·  Foundry docker images"; style="filled,rounded"; fillcolor="#f6f1fb"; color="#c9b3e0"; fontname="Helvetica-Bold"; fontsize=12;
+    m_iglm [label="IgLM  (fine-tuned)\ngenerator", fillcolor="#efe3fb"];
+    m_rfd  [label="RFD4-Proteina\nher2 · her2-novel", fillcolor="#efe3fb"];
+    m_fold [label="Boltz-2 · OpenFold3\nco-fold", fillcolor="#efe3fb"];
+  }
+
+  // ---- data on the VM ----
+  subgraph cluster_data {
+    label="data"; style="filled,rounded"; fillcolor="#eef6ee"; color="#8fc49a"; fontname="Helvetica-Bold"; fontsize=12;
+    da_facs [label="HER2 FACS 524k\n+ SPR 768 (KD)", fillcolor="#eaf3f1"];
+    da_prov [label="provided CDRH3 sets\n(525,063 — novelty)", fillcolor="#eaf3f1"];
+    da_ref  [label="1N8Z reference\nepitope · 4 hotspots", fillcolor="#eaf3f1"];
+  }
+
+  // ---- the generate→score→fold→rank loop ----
+  subgraph cluster_loop {
+    label="generate → score → fold → rank  (reinforcement loop, on the GPU)"; style="filled,rounded"; fillcolor="#efeaf3"; color="#a98fc9"; fontname="Helvetica-Bold"; fontsize=13;
+
+    g_gen  [label="generate\noptimisation: CDRH3 variants\nde-novo: VHH backbones", fillcolor="#dce6fb"];
+    g_seq  [label="sequence scorers  (fast, no fold)\nsurrogate ρ=0.72 · novelty\nthermostability · hard gates", fillcolor="#dcf0e6"];
+    g_rew  [label="reward\n(gated: non-novel / red-flag = −10)", fillcolor="#dcf0e6"];
+    g_sel  [label="prefilter →\ntop candidates", fillcolor="#fbe8cf"];
+    g_fold [label="co-fold top ~10\nBoltz-2 / OpenFold3", fillcolor="#e7dcf7"];
+    g_str  [label="structure gate\nepitope recall · ipTM (geom only)", fillcolor="#dcf0e6"];
+    g_rank [label="rank →\nsubmit ≤20", fillcolor="#d7f0df"];
+    g_ft   [label="finetune IgLM\n(RL on reward)", fillcolor="#dce6fb"];
+
+    g_gen -> g_seq -> g_rew -> g_sel -> g_fold -> g_str -> g_rank;
+    // reinforcement: scores drive finetuning, which re-seeds generation
+    g_str -> g_ft [label="scores", color="#9b6ddb", penwidth=1.5, constraint=false];
+    g_rew -> g_ft [color="#9b6ddb", style=dashed, constraint=false];
+    g_ft  -> g_gen [label="reinforce", color="#9b6ddb", penwidth=1.6, constraint=false];
+  }
+
+  // ---- outputs ----
+  subgraph cluster_out {
+    label="outputs"; style="filled,rounded"; fillcolor="#eceae3"; color="#b7b2a4"; fontname="Helvetica-Bold"; fontsize=12;
+    o_top  [label="results/optimisation_top20.csv\nevery pick + written reason", fillcolor="#d7f0df"];
+    o_dash [label="viz/ 3D dashboard\nhttp.server :8899 (SSH tunnel)", fillcolor="#eaf3f1"];
+  }
+
+  // ---- feeds ----
+  m_iglm -> g_gen [style=dotted, color="#a98fc9"];
+  m_rfd  -> g_gen [style=dotted, color="#a98fc9", label="de-novo"];
+  m_fold -> g_fold [style=dotted, color="#a98fc9"];
+  d_iglm -> m_iglm [style=dashed, color="#c97b1f"];
+
+  da_facs -> g_seq [label="trains surrogate", color="#1aa06d"];
+  da_prov -> g_rew [label="novelty set", color="#1aa06d", style=dashed];
+  da_ref  -> g_str [label="epitope ref", color="#1aa06d"];
+
+  g_rank -> o_top [color="#5b8def", penwidth=1.4];
+  g_str  -> o_dash [color="#5b8def", style=dashed, constraint=false];
+}
