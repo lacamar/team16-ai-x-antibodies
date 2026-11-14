@@ -95,8 +95,10 @@ class AffinitySurrogate:
         log_kd = float(self.reg.predict(x)[0])
         p_high = float(self.clf.predict_proba(x)[0, 1])
         pkd = -log_kd                                   # higher = tighter
+        # training data is all 9-10-mer CDRH3; longer loops are out-of-distribution (unreliable)
+        ood = len(cdrh3.strip()) not in (9, 10)
         return {"pred_log_kd": round(log_kd, 3), "pkd": round(pkd, 3),
-                "p_high": round(p_high, 3),
+                "p_high": round(p_high, 3), "ood": ood,
                 "surrogate": round(pkd + 2.0 * (p_high - 0.5), 3)}  # tunable blend
 
 

@@ -63,6 +63,8 @@ def rank(cands, top_n=TOP_N, surrogate=None):
         s = surrogate.score(r["cdrh3"])
         score = W_SURROGATE * s["surrogate"]
         note = f"surrogate {s['surrogate']:.2f} (pKd {s['pkd']:.2f})"
+        if s.get("ood"):
+            note += " [OOD len: surrogate unreliable]"
         cif = r["_c"].get("design_cif")
         if cif:
             p = preservation(cif)
