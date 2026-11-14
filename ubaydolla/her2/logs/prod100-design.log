@@ -1,0 +1,30 @@
+/usr/local/lib/python3.12/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+cuEquivariance is available and will be used.                                   
+Environment variable CCD_MIRROR_PATH not set. Will not be able to use function  
+requiring this variable. To set it you may:                                     
+  (1) add the line 'export VAR_NAME=path/to/variable' to your .bashrc or .zshrc 
+file                                                                            
+  (2) set it in your current shell with 'export VAR_NAME=path/to/variable'      
+  (3) write it to a .env file in the root of the atomworks.io repository        
+Environment variable PDB_MIRROR_PATH not set. Will not be able to use function  
+requiring this variable. To set it you may:                                     
+  (1) add the line 'export VAR_NAME=path/to/variable' to your .bashrc or .zshrc 
+file                                                                            
+  (2) set it in your current shell with 'export VAR_NAME=path/to/variable'      
+  (3) write it to a .env file in the root of the atomworks.io repository        
+generated new fontManager                                                       
+[rank: 0] Prevalidating input example: her2_cdrh3                               
+[rank: 0]                                                                       
+--- condition_spec: her2_cdrh3 ---                                              
+Sequence: 326 residues                                                          
+                                                                                
+Hotspot: 4 atoms                                                                
+                                                                                
+Coordinate groups: 3 groups                                                     
+                                                                                
+InternalCoordinate: 2105 atoms                                                  
+                                                                                
+REMINDER: Conditions not listed above (including coordinates and sequence) are  
+NOT provided to the model and will be freely generated.                         
+[rank: 0] Dataset inference-dataset: 1 examples (her2_cdrh3_0)                  

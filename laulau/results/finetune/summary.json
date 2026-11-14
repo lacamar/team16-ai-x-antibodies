@@ -1,0 +1,12 @@
+{
+  "stop_reason": "early_stopping",
+  "steps": 45500,
+  "total_steps_planned": 119130,
+  "elapsed_s": 1350.026546239853,
+  "elapsed_h": 0.3750073739555147,
+  "best_val_nll_high": 1.343838095664978,
+  "best_step": 35500,
+  "baseline_val_nll_high": 3.113743782043457,
+  "improvement": 1.769905686378479,
+  "best_checkpoint": "runs/finetune/best"
+}

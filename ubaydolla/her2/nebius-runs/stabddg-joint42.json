@@ -1,0 +1,11 @@
+{
+ "label": "stabddg-joint42",
+ "model": "stab-ddg",
+ "tool": "submit_stab_ddg",
+ "key": "oslo-stab-ddg-stabddg-joint42",
+ "kind": "file",
+ "operation": "predict-binding-ddg",
+ "submitted_at": 1794656054.06729,
+ "operation_id": "op-2a778c6911ff6624",
+ "state": "queued"
+}

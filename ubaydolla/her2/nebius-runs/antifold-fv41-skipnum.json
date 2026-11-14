@@ -1,0 +1,11 @@
+{
+ "label": "antifold-fv41-skipnum",
+ "model": "antifold",
+ "tool": "submit_antifold",
+ "key": "oslo-antifold-antifold-fv41-skipnum",
+ "kind": "file",
+ "operation": "inverse-fold",
+ "submitted_at": 1794654456.5486355,
+ "operation_id": "op-441067223204e140",
+ "state": "queued"
+}

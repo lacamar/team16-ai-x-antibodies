@@ -1,0 +1,539 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "HER2 Design Scoring API",
+    "version": "1.0.0",
+    "summary": "Score a HER2 CDRH3 design on every judged axis and check its eligibility.",
+    "description": "One entry point over the team's scoring modules.\n\nScoring otherwise lives in six modules with three CDRH3 length conventions and two novelty thresholds; this wraps them in one call with one convention, and never truncates a sequence.\n\n**Eligibility** follows the hackathon task description, which is stricter than `team16/novelty_filter.py`: CDRH3 identity to trastuzumab strictly under 70%, and strictly more than 2 point mutations from every one of the 525,063 provided sequences. Both verdicts are returned so a disagreement is visible.\n\n**Tiering is a conjunction.** S-tier needs all three judged axes to beat the trastuzumab baseline, so axes are reported separately and never blended into one number. A tie counts as a failure.\n\n**Degradation, not failure.** Novelty, track and eligibility are standard library only. Affinity needs numpy + scikit-learn; epitope needs gemmi and a co-folded CIF. A missing dependency returns `available: false` with the reason.",
+    "license": { "name": "Internal — hackathon use" }
+  },
+  "servers": [
+    { "url": "http://127.0.0.1:8765", "description": "Local scoring server" }
+  ],
+  "tags": [
+    { "name": "scoring", "description": "Score designs" },
+    { "name": "meta", "description": "Liveness and the rules in force" }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": ["meta"],
+        "summary": "Liveness and loaded-data counts",
+        "operationId": "health",
+        "responses": {
+          "200": {
+            "description": "Server is up and the provided set is loaded",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Health" },
+                "example": {
+                  "ok": true,
+                  "scorer_version": "1.0.0",
+                  "provided_sequences": 525063,
+                  "routes": ["/health", "/rules", "/score?cdrh3=", "POST /score", "POST /score/batch"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rules": {
+      "get": {
+        "tags": ["meta"],
+        "summary": "The eligibility thresholds in force",
+        "description": "Returns the thresholds this server applies and where they come from. Use it to confirm the server is enforcing the task rules rather than the team's looser ones.",
+        "operationId": "rules",
+        "responses": {
+          "200": {
+            "description": "Thresholds",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Rules" },
+                "example": {
+                  "max_trastuzumab_identity": 0.7,
+                  "min_distance_from_provided": 3,
+                  "de_novo_identity_threshold": 0.7,
+                  "trastuzumab_cdrh3": { "10": "WGGDGFYAMD", "11": "WGGDGFYAMDY" },
+                  "source": "task description; stricter than team16 novelty_filter.py"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/score": {
+      "get": {
+        "tags": ["scoring"],
+        "summary": "Score one design (query form)",
+        "description": "Convenience form for a browser or a quick curl. The POST form is preferred for anything with a full VH sequence.",
+        "operationId": "scoreGet",
+        "parameters": [
+          {
+            "name": "cdrh3",
+            "in": "query",
+            "required": true,
+            "description": "CDRH3 loop, 10-residue (FACS convention) or 11-residue (Kabat, trailing Y).",
+            "schema": { "type": "string", "pattern": "^[ACDEFGHIKLMNPQRSTVWY]+$" },
+            "example": "WASSSEYYFDY"
+          },
+          {
+            "name": "vh",
+            "in": "query",
+            "required": false,
+            "description": "Full heavy-chain variable domain. Required to classify the track.",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "design_cif",
+            "in": "query",
+            "required": false,
+            "description": "Path to a co-folded complex (chains A/B antibody, C/D HER2). Required for the epitope axis.",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Score result. Note that an ineligible design is still a 200 — read `eligible`.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ScoreResult" },
+                "examples": {
+                  "eligible": { "$ref": "#/components/examples/EligibleDesign" },
+                  "rejected": { "$ref": "#/components/examples/RejectedDesign" }
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "500": { "$ref": "#/components/responses/ServerError" }
+        }
+      },
+      "post": {
+        "tags": ["scoring"],
+        "summary": "Score one design",
+        "operationId": "scorePost",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ScoreRequest" },
+              "example": { "cdrh3": "WASSSEYYFDY", "vh": "EVQLVESGGG…WGQGTLVTVSS" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Score result",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ScoreResult" },
+                "examples": {
+                  "eligible": { "$ref": "#/components/examples/EligibleDesign" },
+                  "rejected": { "$ref": "#/components/examples/RejectedDesign" }
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "500": { "$ref": "#/components/responses/ServerError" }
+        }
+      }
+    },
+    "/score/batch": {
+      "post": {
+        "tags": ["scoring"],
+        "summary": "Score up to 500 designs in one call",
+        "description": "The affinity surrogate is fitted once per process (~10 s on the first call) and reused, so batching is much faster than repeated single calls.",
+        "operationId": "scoreBatch",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/BatchRequest" },
+              "example": {
+                "items": [
+                  { "cdrh3": "WGGDGFYAMD" },
+                  { "cdrh3": "WASSSEYYFDY" },
+                  { "cdrh3": "KTRSYELDPM" }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "One result per item, in the order submitted",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/BatchResponse" },
+                "example": { "count": 3, "eligible": 2, "results": ["…ScoreResult…"] }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "500": { "$ref": "#/components/responses/ServerError" }
+        }
+      }
+    },
+    "/openapi.json": {
+      "get": {
+        "tags": ["meta"],
+        "summary": "This document",
+        "operationId": "openapi",
+        "responses": {
+          "200": {
+            "description": "OpenAPI 3.1 specification",
+            "content": { "application/json": { "schema": { "type": "object" } } }
+          }
+        }
+      }
+    },
+    "/docs": {
+      "get": {
+        "tags": ["meta"],
+        "summary": "Swagger UI",
+        "operationId": "docs",
+        "responses": {
+          "200": {
+            "description": "Interactive API documentation",
+            "content": { "text/html": { "schema": { "type": "string" } } }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "responses": {
+      "BadRequest": {
+        "description": "Malformed request — missing cdrh3, bad JSON, or too many batch items",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error" },
+            "example": { "error": "cdrh3 query parameter is required" }
+          }
+        }
+      },
+      "ServerError": {
+        "description": "Unhandled error; the message carries the exception type",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error" },
+            "example": { "error": "FileNotFoundError: FACS table not found under /home/hackathon/data/her2-trastuzumab" }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "required": ["error"],
+        "properties": { "error": { "type": "string" } }
+      },
+      "Health": {
+        "type": "object",
+        "required": ["ok", "scorer_version", "provided_sequences"],
+        "properties": {
+          "ok": { "type": "boolean" },
+          "scorer_version": { "type": "string", "example": "1.0.0" },
+          "provided_sequences": {
+            "type": "integer",
+            "description": "Size of the novelty reference set. Expect 525,063.",
+            "example": 525063
+          },
+          "routes": { "type": "array", "items": { "type": "string" } }
+        }
+      },
+      "Rules": {
+        "type": "object",
+        "properties": {
+          "max_trastuzumab_identity": {
+            "type": "number",
+            "description": "CDRH3 identity to trastuzumab must be strictly below this. On a 10-mer that means 4 or more mutations: 3 leaves exactly 70.0%, which fails.",
+            "example": 0.7
+          },
+          "min_distance_from_provided": {
+            "type": "integer",
+            "description": "Minimum differences from every provided CDRH3. The rule says strictly more than 2.",
+            "example": 3
+          },
+          "de_novo_identity_threshold": {
+            "type": "number",
+            "description": "Whole-chain identity below which abguard assigns the de novo track.",
+            "example": 0.7
+          },
+          "trastuzumab_cdrh3": {
+            "type": "object",
+            "additionalProperties": { "type": "string" }
+          },
+          "source": { "type": "string" }
+        }
+      },
+      "ScoreRequest": {
+        "type": "object",
+        "required": ["cdrh3"],
+        "properties": {
+          "cdrh3": {
+            "type": "string",
+            "pattern": "^[ACDEFGHIKLMNPQRSTVWY]+$",
+            "description": "CDRH3 loop. Not truncated or padded — the length you send is the length scored.",
+            "example": "WASSSEYYFDY"
+          },
+          "vh": {
+            "type": "string",
+            "description": "Full VH. Required to classify the track.",
+            "nullable": true
+          },
+          "design_cif": {
+            "type": "string",
+            "description": "Path to a co-folded complex. Required for the epitope axis.",
+            "nullable": true
+          }
+        }
+      },
+      "BatchRequest": {
+        "type": "object",
+        "required": ["items"],
+        "properties": {
+          "items": {
+            "type": "array",
+            "maxItems": 500,
+            "items": { "$ref": "#/components/schemas/ScoreRequest" }
+          }
+        }
+      },
+      "BatchResponse": {
+        "type": "object",
+        "properties": {
+          "count": { "type": "integer" },
+          "eligible": {
+            "type": "integer",
+            "description": "How many of the submitted designs passed every hard rule."
+          },
+          "results": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/ScoreResult" }
+          }
+        }
+      },
+      "ScoreResult": {
+        "type": "object",
+        "required": ["cdrh3", "eligible", "verdict", "reasons", "novelty", "axes"],
+        "properties": {
+          "cdrh3": { "type": "string", "example": "WASSSEYYFDY" },
+          "length": { "type": "integer", "example": 11 },
+          "convention": {
+            "type": "string",
+            "description": "Which CDRH3 convention the length implies.",
+            "enum": ["10-residue (FACS table)", "11-residue (Kabat, trailing Y)", "non-standard"]
+          },
+          "eligible": {
+            "type": "boolean",
+            "description": "Passes every hard rule. An ineligible design still returns 200."
+          },
+          "verdict": { "type": "string", "enum": ["eligible", "rejected"] },
+          "reasons": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Empty when eligible; otherwise every reason, not just the first."
+          },
+          "track": { "$ref": "#/components/schemas/Track" },
+          "novelty": { "$ref": "#/components/schemas/Novelty" },
+          "axes": { "$ref": "#/components/schemas/Axes" },
+          "predicted_tier": { "$ref": "#/components/schemas/PredictedTier" },
+          "provenance": { "$ref": "#/components/schemas/Provenance" }
+        }
+      },
+      "Track": {
+        "type": "object",
+        "description": "Which track abguard would assign. Computed from whole-chain identity, never chosen. A CDRH3 graft on the trastuzumab framework sits near 94% identity and cannot reach the de novo track.",
+        "properties": {
+          "track": { "type": ["string", "null"], "enum": ["optimisation", "de_novo", null] },
+          "available": { "type": "boolean", "description": "false when no vh was supplied" },
+          "identity_to_trastuzumab_vh": { "type": "number", "example": 0.9417 },
+          "note": { "type": "string" }
+        }
+      },
+      "Novelty": {
+        "type": "object",
+        "properties": {
+          "passes": { "type": "boolean" },
+          "reasons": { "type": "array", "items": { "type": "string" } },
+          "mutations_from_trastuzumab": { "type": "integer", "example": 7 },
+          "identity_to_trastuzumab": { "type": "number", "example": 0.3636 },
+          "compared_against": {
+            "type": "string",
+            "description": "The trastuzumab form matched to the candidate's length.",
+            "example": "WGGDGFYAMDY"
+          },
+          "provided_sequences": { "type": "integer", "example": 525063 },
+          "legacy_team16_passes": {
+            "type": "boolean",
+            "description": "What team16's novelty_filter.py would have said. Differs when its off-by-one thresholds matter."
+          },
+          "note": {
+            "type": ["string", "null"],
+            "description": "Set when strict and legacy disagree."
+          }
+        }
+      },
+      "Axes": {
+        "type": "object",
+        "description": "The three judged properties, scored independently. Never summed.",
+        "properties": {
+          "affinity": { "$ref": "#/components/schemas/AffinityAxis" },
+          "epitope": { "$ref": "#/components/schemas/EpitopeAxis" },
+          "thermostability": { "$ref": "#/components/schemas/ThermoAxis" }
+        }
+      },
+      "AffinityAxis": {
+        "type": "object",
+        "properties": {
+          "available": { "type": "boolean" },
+          "surrogate": { "type": "number", "description": "pkd + 2*(p_high - 0.5). The ranking key." },
+          "pkd": { "type": "number", "description": "Negative log10 KD. Higher is tighter." },
+          "pred_log_kd": { "type": "number" },
+          "pred_kd_nM": { "type": "number", "example": 69.66 },
+          "p_high": { "type": "number", "description": "P(FACS high binder)." },
+          "out_of_distribution": {
+            "type": "boolean",
+            "description": "true when the CDRH3 is not 9 or 10 residues. The number is still returned but is excluded from the tier count."
+          },
+          "baseline_trastuzumab_surrogate": { "type": "number" },
+          "method": { "type": "string" },
+          "error": { "type": "string", "description": "Present when available is false." }
+        }
+      },
+      "EpitopeAxis": {
+        "type": "object",
+        "properties": {
+          "available": { "type": "boolean" },
+          "epitope_recall": {
+            "type": "number",
+            "description": "Share of trastuzumab's 1N8Z epitope the design keeps.",
+            "example": 0.47
+          },
+          "jaccard": { "type": "number" },
+          "hotspots_hit": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Of C572, C573, D591, D593."
+          },
+          "n_ref": { "type": "integer" },
+          "n_design": { "type": "integer" },
+          "n_shared": { "type": "integer" },
+          "lost": { "type": "array", "items": { "type": "string" } },
+          "method": { "type": "string" }
+        }
+      },
+      "ThermoAxis": {
+        "type": "object",
+        "properties": {
+          "available": { "type": "boolean" },
+          "score": { "type": "number", "description": "0 to 1, higher is better.", "example": 1.0 },
+          "baseline_trastuzumab": { "type": "number", "example": 1.0 },
+          "flags": {
+            "type": "object",
+            "description": "Raw liability counts: hydrophobic runs, charge runs, cysteines, prolines, glycine fraction, net charge."
+          },
+          "method": { "type": "string" },
+          "caveat": {
+            "type": "string",
+            "description": "Heuristic proxy, not a predicted Tm."
+          }
+        }
+      },
+      "PredictedTier": {
+        "type": "object",
+        "description": "Predicted, not measured. Adaptyv decides the real tier.",
+        "properties": {
+          "axes_beating_baseline": { "type": "integer", "minimum": 0, "maximum": 3 },
+          "axes_decided": {
+            "type": "integer",
+            "description": "How many axes could be scored. Fewer than 3 means the tier is null."
+          },
+          "per_axis": {
+            "type": "object",
+            "description": "true beats baseline, false does not, null undecidable (for example out-of-distribution affinity).",
+            "additionalProperties": { "type": ["boolean", "null"] }
+          },
+          "tier": {
+            "type": ["string", "null"],
+            "enum": ["S", "A", "B", "unsuccessful", null],
+            "description": "Only set when all three axes were decided."
+          },
+          "caveat": { "type": "string" }
+        }
+      },
+      "Provenance": {
+        "type": "object",
+        "description": "Per the repo rule: every number carries where it came from.",
+        "properties": {
+          "scorer_version": { "type": "string" },
+          "data_dir": { "type": "string" },
+          "team16_dir": { "type": "string" },
+          "provided_sequences": { "type": "integer" },
+          "rules": { "type": "string" }
+        }
+      }
+    },
+    "examples": {
+      "EligibleDesign": {
+        "summary": "Eligible, but affinity out of distribution",
+        "value": {
+          "cdrh3": "WASSSEYYFDY",
+          "length": 11,
+          "convention": "11-residue (Kabat, trailing Y)",
+          "eligible": true,
+          "verdict": "eligible",
+          "reasons": [],
+          "track": { "track": "optimisation", "available": true, "identity_to_trastuzumab_vh": 0.9417 },
+          "novelty": {
+            "passes": true,
+            "reasons": [],
+            "mutations_from_trastuzumab": 7,
+            "identity_to_trastuzumab": 0.3636,
+            "compared_against": "WGGDGFYAMDY",
+            "provided_sequences": 525063,
+            "legacy_team16_passes": true,
+            "note": null
+          },
+          "axes": {
+            "affinity": { "available": true, "pred_kd_nM": 69.66, "p_high": 0.062, "out_of_distribution": true },
+            "epitope": { "available": false, "note": "pass design_cif= from a co-folded complex" },
+            "thermostability": { "available": true, "score": 1.0, "baseline_trastuzumab": 1.0 }
+          },
+          "predicted_tier": {
+            "axes_beating_baseline": 0,
+            "axes_decided": 1,
+            "per_axis": { "affinity": null, "thermostability": false },
+            "tier": null
+          },
+          "provenance": { "scorer_version": "1.0.0", "provided_sequences": 525063 }
+        }
+      },
+      "RejectedDesign": {
+        "summary": "Rejected — 3 mutations leaves exactly 70.0% identity",
+        "value": {
+          "cdrh3": "WGPPYFYAMDY",
+          "length": 11,
+          "convention": "11-residue (Kabat, trailing Y)",
+          "eligible": false,
+          "verdict": "rejected",
+          "reasons": [
+            "CDRH3 identity to trastuzumab 72.7% is not under 70% (3 mutations; needs 4)"
+          ],
+          "novelty": {
+            "passes": false,
+            "mutations_from_trastuzumab": 3,
+            "identity_to_trastuzumab": 0.7273,
+            "compared_against": "WGGDGFYAMDY",
+            "legacy_team16_passes": true,
+            "note": "legacy and strict disagree: team16's novelty_filter.py uses thresholds one lower than the task description"
+          }
+        }
+      }
+    }
+  }
+}

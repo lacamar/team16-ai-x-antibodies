@@ -1,0 +1,11 @@
+{
+ "label": "esm2-vh-pll",
+ "model": "esm2-650m",
+ "tool": "submit_esm2_650m",
+ "key": "oslo-esm2-650m-esm2-vh-pll",
+ "kind": "file",
+ "operation": "score-sequences",
+ "submitted_at": 1794653257.2338922,
+ "operation_id": "op-07b3495e1f4d104a",
+ "state": "running"
+}

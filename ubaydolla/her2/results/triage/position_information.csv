@@ -1,0 +1,11 @@
+position,wt_aa,info_bits_high_class,divergence_high_vs_low,best_aa,best_logodds,worst_aa,wt_logodds,top5_enriched
+1,W,2.379,0.145,N,1.188,I,0.098,"N,Y,H,R,W"
+2,G,0.799,0.285,A,1.297,K,1.175,"A,G,D,P,Y"
+3,G,0.755,0.427,A,3.415,H,1.765,"A,G,R,P,D"
+4,D,0.519,0.297,G,2.169,H,-0.896,"G,P,A,W,T"
+5,G,1.89,0.385,R,3.768,K,0.653,"R,P,M,G,T"
+6,F,1.558,0.187,G,1.784,K,0.582,"G,D,P,V,A"
+7,Y,3.202,0.099,W,0.953,T,0.139,"W,G,D,E,F"
+8,A,0.883,0.412,T,2.118,L,0.859,"T,S,K,N,A"
+9,M,1.81,0.099,A,0.671,W,-0.091,"A,V,L,K,F"
+10,D,0.667,0.328,D,2.552,W,2.552,"D,N,Y,E,K"

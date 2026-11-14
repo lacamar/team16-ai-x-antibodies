@@ -1,0 +1,64 @@
+{
+  "target": 48,
+  "collected": 400,
+  "reached_target": true,
+  "per_config": [
+    {
+      "label": "ft_T1.0",
+      "ckpt": "runs/finetune_denovo/best",
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "raw": 6000,
+      "distinct": 5927,
+      "denovo_passers": 0,
+      "pass_rate": 0.0,
+      "median_vh_identity": 0.9417,
+      "min_vh_identity": 0.9167,
+      "seconds": 8.6,
+      "cum_passers": 0
+    },
+    {
+      "label": "ft_T1.5",
+      "ckpt": "runs/finetune_denovo/best",
+      "temperature": 1.5,
+      "top_p": 0.98,
+      "raw": 6000,
+      "distinct": 5993,
+      "denovo_passers": 0,
+      "pass_rate": 0.0,
+      "median_vh_identity": 0.9333,
+      "min_vh_identity": 0.8417,
+      "seconds": 8.1,
+      "cum_passers": 0
+    },
+    {
+      "label": "ft_T2.0",
+      "ckpt": "runs/finetune_denovo/best",
+      "temperature": 2.0,
+      "top_p": 1.0,
+      "raw": 5989,
+      "distinct": 5989,
+      "denovo_passers": 41,
+      "pass_rate": 0.0068,
+      "median_vh_identity": 0.9333,
+      "min_vh_identity": 0.05,
+      "seconds": 9.7,
+      "cum_passers": 41
+    },
+    {
+      "label": "ft_T2.5",
+      "ckpt": "runs/finetune_denovo/best",
+      "temperature": 2.5,
+      "top_p": 1.0,
+      "raw": 5885,
+      "distinct": 5885,
+      "denovo_passers": 359,
+      "pass_rate": 0.061,
+      "median_vh_identity": 0.9167,
+      "min_vh_identity": 0.0233,
+      "seconds": 10.7,
+      "cum_passers": 400
+    }
+  ],
+  "note": "vh_identity < 0.70 is a NECESSARY proxy for '<70% to any known antibody' (only trastuzumab held locally). p_high is None when CDRH3 not locatable in a novel framework (classifier scores the 10-mer only)."
+}

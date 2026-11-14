@@ -1,0 +1,1525 @@
+{
+ "pdb_file": "complex.pdb",
+ "partner_a": [
+  "A",
+  "B"
+ ],
+ "partner_b": [
+  "C",
+  "D"
+ ],
+ "variants": [
+  {
+   "id": "joint_00",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 101,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "D"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "I"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 106,
+     "insertion_code": "",
+     "wild_type": "A",
+     "mutant": "S"
+    }
+   ]
+  },
+  {
+   "id": "joint_01",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 99,
+     "insertion_code": "",
+     "wild_type": "W",
+     "mutant": "E"
+    },
+    {
+     "chain": "B",
+     "residue_number": 101,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "D"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "E"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    }
+   ]
+  },
+  {
+   "id": "joint_02",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 99,
+     "insertion_code": "",
+     "wild_type": "W",
+     "mutant": "S"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "E"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 106,
+     "insertion_code": "",
+     "wild_type": "A",
+     "mutant": "E"
+    }
+   ]
+  },
+  {
+   "id": "joint_03",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 99,
+     "insertion_code": "",
+     "wild_type": "W",
+     "mutant": "E"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "E"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 106,
+     "insertion_code": "",
+     "wild_type": "A",
+     "mutant": "E"
+    }
+   ]
+  },
+  {
+   "id": "joint_04",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 99,
+     "insertion_code": "",
+     "wild_type": "W",
+     "mutant": "R"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "E"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 106,
+     "insertion_code": "",
+     "wild_type": "A",
+     "mutant": "E"
+    }
+   ]
+  },
+  {
+   "id": "joint_05",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 99,
+     "insertion_code": "",
+     "wild_type": "W",
+     "mutant": "F"
+    },
+    {
+     "chain": "B",
+     "residue_number": 101,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "S"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "T"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "H"
+    }
+   ]
+  },
+  {
+   "id": "joint_06",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 99,
+     "insertion_code": "",
+     "wild_type": "W",
+     "mutant": "F"
+    },
+    {
+     "chain": "B",
+     "residue_number": 101,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "R"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "T"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    }
+   ]
+  },
+  {
+   "id": "joint_07",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 100,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "S"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 106,
+     "insertion_code": "",
+     "wild_type": "A",
+     "mutant": "Y"
+    }
+   ]
+  },
+  {
+   "id": "joint_08",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "N"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 105,
+     "insertion_code": "",
+     "wild_type": "Y",
+     "mutant": "H"
+    },
+    {
+     "chain": "B",
+     "residue_number": 106,
+     "insertion_code": "",
+     "wild_type": "A",
+     "mutant": "E"
+    }
+   ]
+  },
+  {
+   "id": "joint_09",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 99,
+     "insertion_code": "",
+     "wild_type": "W",
+     "mutant": "R"
+    },
+    {
+     "chain": "B",
+     "residue_number": 100,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "E"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    }
+   ]
+  },
+  {
+   "id": "joint_10",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 99,
+     "insertion_code": "",
+     "wild_type": "W",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 101,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "S"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "N"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 106,
+     "insertion_code": "",
+     "wild_type": "A",
+     "mutant": "Y"
+    }
+   ]
+  },
+  {
+   "id": "joint_11",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 101,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "S"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 105,
+     "insertion_code": "",
+     "wild_type": "Y",
+     "mutant": "W"
+    }
+   ]
+  },
+  {
+   "id": "joint_12",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 99,
+     "insertion_code": "",
+     "wild_type": "W",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 100,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "A"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "N"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 106,
+     "insertion_code": "",
+     "wild_type": "A",
+     "mutant": "E"
+    }
+   ]
+  },
+  {
+   "id": "joint_13",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 105,
+     "insertion_code": "",
+     "wild_type": "Y",
+     "mutant": "W"
+    },
+    {
+     "chain": "B",
+     "residue_number": 106,
+     "insertion_code": "",
+     "wild_type": "A",
+     "mutant": "E"
+    }
+   ]
+  },
+  {
+   "id": "joint_14",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 105,
+     "insertion_code": "",
+     "wild_type": "Y",
+     "mutant": "D"
+    },
+    {
+     "chain": "B",
+     "residue_number": 106,
+     "insertion_code": "",
+     "wild_type": "A",
+     "mutant": "E"
+    }
+   ]
+  },
+  {
+   "id": "joint_15",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 101,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "S"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "S"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 104,
+     "insertion_code": "",
+     "wild_type": "F",
+     "mutant": "T"
+    }
+   ]
+  },
+  {
+   "id": "joint_16",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 101,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "S"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "Q"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "N"
+    },
+    {
+     "chain": "B",
+     "residue_number": 104,
+     "insertion_code": "",
+     "wild_type": "F",
+     "mutant": "G"
+    }
+   ]
+  },
+  {
+   "id": "joint_17",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 101,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "S"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "E"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "R"
+    },
+    {
+     "chain": "B",
+     "residue_number": 104,
+     "insertion_code": "",
+     "wild_type": "F",
+     "mutant": "N"
+    }
+   ]
+  },
+  {
+   "id": "joint_18",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 100,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "E"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 104,
+     "insertion_code": "",
+     "wild_type": "F",
+     "mutant": "W"
+    }
+   ]
+  },
+  {
+   "id": "joint_19",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 101,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "S"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 104,
+     "insertion_code": "",
+     "wild_type": "F",
+     "mutant": "D"
+    },
+    {
+     "chain": "B",
+     "residue_number": 106,
+     "insertion_code": "",
+     "wild_type": "A",
+     "mutant": "E"
+    }
+   ]
+  },
+  {
+   "id": "joint_20",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 100,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "E"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 104,
+     "insertion_code": "",
+     "wild_type": "F",
+     "mutant": "S"
+    }
+   ]
+  },
+  {
+   "id": "joint_21",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 101,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "S"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "N"
+    },
+    {
+     "chain": "B",
+     "residue_number": 104,
+     "insertion_code": "",
+     "wild_type": "F",
+     "mutant": "G"
+    },
+    {
+     "chain": "B",
+     "residue_number": 106,
+     "insertion_code": "",
+     "wild_type": "A",
+     "mutant": "E"
+    }
+   ]
+  },
+  {
+   "id": "joint_22",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 99,
+     "insertion_code": "",
+     "wild_type": "W",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 101,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "S"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "E"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 104,
+     "insertion_code": "",
+     "wild_type": "F",
+     "mutant": "W"
+    }
+   ]
+  },
+  {
+   "id": "joint_23",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 101,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "S"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 104,
+     "insertion_code": "",
+     "wild_type": "F",
+     "mutant": "G"
+    },
+    {
+     "chain": "B",
+     "residue_number": 106,
+     "insertion_code": "",
+     "wild_type": "A",
+     "mutant": "E"
+    }
+   ]
+  },
+  {
+   "id": "joint_24",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 100,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "E"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 104,
+     "insertion_code": "",
+     "wild_type": "F",
+     "mutant": "T"
+    }
+   ]
+  },
+  {
+   "id": "joint_25",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 99,
+     "insertion_code": "",
+     "wild_type": "W",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 101,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "S"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "E"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 104,
+     "insertion_code": "",
+     "wild_type": "F",
+     "mutant": "T"
+    }
+   ]
+  },
+  {
+   "id": "joint_26",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 99,
+     "insertion_code": "",
+     "wild_type": "W",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 101,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "S"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 104,
+     "insertion_code": "",
+     "wild_type": "F",
+     "mutant": "W"
+    }
+   ]
+  },
+  {
+   "id": "joint_27",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 100,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "E"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 104,
+     "insertion_code": "",
+     "wild_type": "F",
+     "mutant": "G"
+    },
+    {
+     "chain": "B",
+     "residue_number": 106,
+     "insertion_code": "",
+     "wild_type": "A",
+     "mutant": "E"
+    }
+   ]
+  },
+  {
+   "id": "joint_28",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "E"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 104,
+     "insertion_code": "",
+     "wild_type": "F",
+     "mutant": "W"
+    },
+    {
+     "chain": "B",
+     "residue_number": 106,
+     "insertion_code": "",
+     "wild_type": "A",
+     "mutant": "E"
+    }
+   ]
+  },
+  {
+   "id": "joint_29",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 100,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "E"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 104,
+     "insertion_code": "",
+     "wild_type": "F",
+     "mutant": "N"
+    },
+    {
+     "chain": "B",
+     "residue_number": 106,
+     "insertion_code": "",
+     "wild_type": "A",
+     "mutant": "S"
+    }
+   ]
+  },
+  {
+   "id": "joint_30",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 99,
+     "insertion_code": "",
+     "wild_type": "W",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 101,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "S"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "E"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 105,
+     "insertion_code": "",
+     "wild_type": "Y",
+     "mutant": "W"
+    }
+   ]
+  },
+  {
+   "id": "joint_31",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "V"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 104,
+     "insertion_code": "",
+     "wild_type": "F",
+     "mutant": "W"
+    },
+    {
+     "chain": "B",
+     "residue_number": 106,
+     "insertion_code": "",
+     "wild_type": "A",
+     "mutant": "E"
+    }
+   ]
+  },
+  {
+   "id": "joint_32",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "E"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "N"
+    },
+    {
+     "chain": "B",
+     "residue_number": 104,
+     "insertion_code": "",
+     "wild_type": "F",
+     "mutant": "S"
+    },
+    {
+     "chain": "B",
+     "residue_number": 106,
+     "insertion_code": "",
+     "wild_type": "A",
+     "mutant": "E"
+    }
+   ]
+  },
+  {
+   "id": "joint_33",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 99,
+     "insertion_code": "",
+     "wild_type": "W",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "E"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 105,
+     "insertion_code": "",
+     "wild_type": "Y",
+     "mutant": "W"
+    },
+    {
+     "chain": "B",
+     "residue_number": 106,
+     "insertion_code": "",
+     "wild_type": "A",
+     "mutant": "E"
+    }
+   ]
+  },
+  {
+   "id": "joint_34",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 100,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "A"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "E"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 104,
+     "insertion_code": "",
+     "wild_type": "F",
+     "mutant": "G"
+    },
+    {
+     "chain": "B",
+     "residue_number": 106,
+     "insertion_code": "",
+     "wild_type": "A",
+     "mutant": "E"
+    }
+   ]
+  },
+  {
+   "id": "joint_35",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 99,
+     "insertion_code": "",
+     "wild_type": "W",
+     "mutant": "F"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 104,
+     "insertion_code": "",
+     "wild_type": "F",
+     "mutant": "N"
+    },
+    {
+     "chain": "B",
+     "residue_number": 106,
+     "insertion_code": "",
+     "wild_type": "A",
+     "mutant": "E"
+    }
+   ]
+  },
+  {
+   "id": "joint_36",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 99,
+     "insertion_code": "",
+     "wild_type": "W",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "E"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "W"
+    },
+    {
+     "chain": "B",
+     "residue_number": 104,
+     "insertion_code": "",
+     "wild_type": "F",
+     "mutant": "N"
+    },
+    {
+     "chain": "B",
+     "residue_number": 106,
+     "insertion_code": "",
+     "wild_type": "A",
+     "mutant": "E"
+    }
+   ]
+  },
+  {
+   "id": "joint_37",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 99,
+     "insertion_code": "",
+     "wild_type": "W",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "E"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "N"
+    },
+    {
+     "chain": "B",
+     "residue_number": 104,
+     "insertion_code": "",
+     "wild_type": "F",
+     "mutant": "W"
+    },
+    {
+     "chain": "B",
+     "residue_number": 106,
+     "insertion_code": "",
+     "wild_type": "A",
+     "mutant": "E"
+    }
+   ]
+  },
+  {
+   "id": "joint_38",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 99,
+     "insertion_code": "",
+     "wild_type": "W",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "E"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 104,
+     "insertion_code": "",
+     "wild_type": "F",
+     "mutant": "W"
+    },
+    {
+     "chain": "B",
+     "residue_number": 106,
+     "insertion_code": "",
+     "wild_type": "A",
+     "mutant": "E"
+    }
+   ]
+  },
+  {
+   "id": "CTRL_afargmax_EGGIYGYALD",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 99,
+     "insertion_code": "",
+     "wild_type": "W",
+     "mutant": "E"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "I"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 104,
+     "insertion_code": "",
+     "wild_type": "F",
+     "mutant": "G"
+    },
+    {
+     "chain": "B",
+     "residue_number": 107,
+     "insertion_code": "",
+     "wild_type": "M",
+     "mutant": "L"
+    }
+   ]
+  },
+  {
+   "id": "CTRL_afargmax_EGGIYGYAMD",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 99,
+     "insertion_code": "",
+     "wild_type": "W",
+     "mutant": "E"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "I"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 104,
+     "insertion_code": "",
+     "wild_type": "F",
+     "mutant": "G"
+    }
+   ]
+  },
+  {
+   "id": "CTRL_afargmax_YGGIYGYALD",
+   "mutations": [
+    {
+     "chain": "B",
+     "residue_number": 99,
+     "insertion_code": "",
+     "wild_type": "W",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 102,
+     "insertion_code": "",
+     "wild_type": "D",
+     "mutant": "I"
+    },
+    {
+     "chain": "B",
+     "residue_number": 103,
+     "insertion_code": "",
+     "wild_type": "G",
+     "mutant": "Y"
+    },
+    {
+     "chain": "B",
+     "residue_number": 104,
+     "insertion_code": "",
+     "wild_type": "F",
+     "mutant": "G"
+    },
+    {
+     "chain": "B",
+     "residue_number": 107,
+     "insertion_code": "",
+     "wild_type": "M",
+     "mutant": "L"
+    }
+   ]
+  }
+ ]
+}

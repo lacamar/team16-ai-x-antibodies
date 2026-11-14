@@ -1,0 +1,28 @@
+{
+  "metrics": {
+    "logreg": {
+      "val_auc": 0.9643650468116478,
+      "test_auc": 0.9440406025805197,
+      "test_ap": 0.9028741839143654,
+      "fit_s": 3.7
+    },
+    "histgb": {
+      "val_auc": 0.9952828688678689,
+      "test_auc": 0.9909536344700423,
+      "test_ap": 0.983337546508016,
+      "fit_s": 23.5
+    }
+  },
+  "shanehsazzadeh": {
+    "n": 198,
+    "spearman": 0.29702025899788864,
+    "p": 2.1446317384871427e-05
+  },
+  "spr": {
+    "n": 187,
+    "spearman": 0.3529760466795805,
+    "p": 7.23545456086468e-07
+  },
+  "train_rows": 367044,
+  "split": "data/zenodo-splits/unz/data/affinity_data/her2/her2_aff_large/processed/remove_overlap/clonotype_split/0.7_0.15_0.15"
+}

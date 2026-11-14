@@ -1,0 +1,11 @@
+{
+ "label": "stabddg-shell42",
+ "model": "stab-ddg",
+ "tool": "submit_stab_ddg",
+ "key": "oslo-stab-ddg-stabddg-shell42",
+ "kind": "file",
+ "operation": "predict-binding-ddg",
+ "submitted_at": 1794654249.1510613,
+ "operation_id": "op-79006e6f713984a7",
+ "state": "queued"
+}

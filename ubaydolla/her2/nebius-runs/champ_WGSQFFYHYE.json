@@ -1,0 +1,10 @@
+{
+ "label": "champ_WGSQFFYHYE",
+ "model": "openfold3",
+ "tool": "infer_openfold3_native",
+ "key": "oslo-openfold3-champ_WGSQFFYHYE",
+ "kind": "inline",
+ "submitted_at": 1794662867.5632043,
+ "state": "rejected",
+ "error": "{\"code\": -32602, \"message\": \"/: must satisfy additionalProperties; /: missing required fields: request_id, inputs; /: missing required fields: request_id, inputs\", \"data\": {\"code\": \"MODEL_INPUT_INVALID\", \"retryable\": false, \"admission\": \"not-submitted\", \"model_id\": \"openfold3\", \"message\": \"/: must satisfy additionalProperties; /: missing required fields: request_id, inputs; /: missing required fields: request_id, inputs\", \"next_action\": \"Correct the listed fields using this App's current input schema, then submit again.\", \"issues\": [{\"field\": \"/\", \"rule\": \"additionalProperties\", \"allowed_fields\": [\"idempotency_key\", \"inputs\", \"output_prefix\", \"request_id\", \"wait_seconds\"]}, {\"field\": \"/\", \"rule\": \"required\", \"missing_fields\": [\"request_id\", \"inputs\"]}, {\"field\": \"/\", \"rule\": \"required\", \"m"
+}

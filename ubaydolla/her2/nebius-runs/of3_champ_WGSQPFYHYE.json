@@ -1,0 +1,11 @@
+{
+ "label": "of3_champ_WGSQPFYHYE",
+ "model": "openfold3",
+ "tool": "infer_openfold3_native",
+ "key": "oslo-openfold3-of3_champ_WGSQPFYHYE",
+ "kind": "inline",
+ "submitted_at": 1794662970.0495572,
+ "operation_id": "op-e13fcc5bc3d79194",
+ "state": "succeeded",
+ "total_seconds": 1
+}

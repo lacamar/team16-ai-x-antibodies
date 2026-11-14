@@ -1,0 +1,13 @@
+{
+  "path": "denovo-fullseq",
+  "stop_reason": "early_stopping",
+  "steps": 57000,
+  "total_steps_planned": 119130,
+  "elapsed_s": 1546.0690252780914,
+  "elapsed_h": 0.42946361813280315,
+  "best_val_nll_high": 1.4770389795303345,
+  "best_step": 47000,
+  "baseline_val_nll_high": 3.4585025310516357,
+  "improvement": 1.9814635515213013,
+  "best_checkpoint": "runs/finetune_denovo/best"
+}

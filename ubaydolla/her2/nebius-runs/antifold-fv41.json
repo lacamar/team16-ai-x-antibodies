@@ -1,0 +1,11 @@
+{
+ "label": "antifold-fv41",
+ "model": "antifold",
+ "tool": "submit_antifold",
+ "key": "oslo-antifold-antifold-fv41",
+ "kind": "file",
+ "operation": "inverse-fold",
+ "submitted_at": 1794654270.113303,
+ "operation_id": "op-c6966422ac4e4105",
+ "state": "queued"
+}

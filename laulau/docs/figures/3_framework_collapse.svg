@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" font-family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <rect width="720" height="300" fill="#fcfcfb"/>
+  <text x="40" y="38" font-size="19" font-weight="600" fill="#0b0b0b">The headline: the framework collapses onto trastuzumab</text>
+  <text x="40" y="60" font-size="13" fill="#52514e">Mean generated VH vs trastuzumab &#183; 120 residues, CDRH3 at 98&#8211;108</text>
+
+  <!-- VH bar: x 60..660 (600px, 5px/aa). prefix 490, cdrh3 50, suffix 60 -->
+  <g>
+    <rect x="60"  y="110" width="490" height="44" rx="4" fill="#d8d7d2"/>
+    <rect x="552" y="110" width="50"  height="44" rx="3" fill="#eb6834"/>
+    <rect x="604" y="110" width="56"  height="44" rx="4" fill="#d8d7d2"/>
+    <text x="305" y="138" font-size="13" fill="#52514e" text-anchor="middle">framework &#183; 110 aa</text>
+  </g>
+  <!-- CDRH3 callout -->
+  <line x1="577" y1="110" x2="577" y2="86" stroke="#c0491f" stroke-width="1.5"/>
+  <text x="577" y="80" font-size="12" font-weight="600" fill="#c0491f" text-anchor="middle">CDRH3 &#183; 10 aa</text>
+  <text x="60" y="180" font-size="12" fill="#52514e"><tspan font-weight="600" fill="#0b0b0b">conserved</tspan> &#8212; identical to trastuzumab in every design</text>
+  <text x="660" y="198" font-size="12" fill="#c0491f" text-anchor="end"><tspan font-weight="600">diversified</tspan> &#8212; 6.8/10 positions changed, 44% novel</text>
+
+  <!-- big stat -->
+  <text x="60" y="258" font-size="48" font-weight="700" fill="#0b0b0b">94.3%</text>
+  <text x="235" y="246" font-size="15" fill="#0b0b0b">mean VH identity to trastuzumab</text>
+  <text x="235" y="268" font-size="13" fill="#c0491f" font-weight="600">&#8658; optimisation-track designs, not de-novo (needs &lt;70% identity)</text>
+
+  <text x="40" y="294" font-size="12" fill="#52514e">HER2 context can only come from HER2-binding sequences, and the only such data is single-framework.</text>
+</svg>

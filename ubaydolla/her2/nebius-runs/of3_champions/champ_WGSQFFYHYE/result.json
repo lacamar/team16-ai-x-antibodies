@@ -1,0 +1,131 @@
+{
+ "model_id": "openfold3",
+ "operation": {
+  "id": "op-faddadb6df10e40f",
+  "status": "SUCCEEDED"
+ },
+ "result": {
+  "schema": "fs2-serve.nebius.ai/operation-artifact-result/v1",
+  "artifact": {
+   "artifact_id": "6a03b17a-0400-562c-8cd0-0e859368f43a",
+   "sha256": "9ec325e58e0d6c16e2ca5a3f799c2d9b1bfd9ea23d7e3f532fa65fccd409ff88",
+   "size_bytes": 266190,
+   "media_type": "application/json",
+   "compression": "none"
+  },
+  "content_type": "application/json"
+ },
+ "response": {
+  "operation_id": "op-faddadb6df10e40f",
+  "attempt_id": "op-faddadb6df10e40f-c2lrg",
+  "http_status": 200,
+  "content_type": "application/json",
+  "size_bytes": 266224,
+  "sha256": "b969efbd4805aba8d0a730b8e6acdce599df6670336d3dc1eaabd3729ab1b212",
+  "timings": {
+   "posted_at": "2026-11-14T13:31:21Z",
+   "first_byte_at": "2026-11-14T13:32:43Z",
+   "completed_at": "2026-11-14T13:32:44Z",
+   "duration_s": 82.98463
+  },
+  "capture_complete": true,
+  "artifact": {
+   "artifact_id": "9a2872f2-28e0-5edb-900d-c216b3b9e1ef",
+   "sha256": "b969efbd4805aba8d0a730b8e6acdce599df6670336d3dc1eaabd3729ab1b212",
+   "size_bytes": 266224,
+   "media_type": "application/json",
+   "compression": "none"
+  }
+ },
+ "upstream_success": true,
+ "customer_storage": {
+  "available": true,
+  "bucket": "fs2-oslo-hackathon-participant-15-cd27f09d96",
+  "prefix": "runs/openfold3/op-faddadb6df10e40f/",
+  "manifest_key": "runs/openfold3/op-faddadb6df10e40f/manifest.json",
+  "files": [
+   {
+    "path": "artifacts/9a2872f2-28e0-5edb-900d-c216b3b9e1ef.json",
+    "sha256": "b969efbd4805aba8d0a730b8e6acdce599df6670336d3dc1eaabd3729ab1b212",
+    "size_bytes": 266224,
+    "key": "runs/openfold3/op-faddadb6df10e40f/artifacts/9a2872f2-28e0-5edb-900d-c216b3b9e1ef.json"
+   },
+   {
+    "path": "artifacts/6a03b17a-0400-562c-8cd0-0e859368f43a.json",
+    "sha256": "9ec325e58e0d6c16e2ca5a3f799c2d9b1bfd9ea23d7e3f532fa65fccd409ff88",
+    "size_bytes": 266190,
+    "key": "runs/openfold3/op-faddadb6df10e40f/artifacts/6a03b17a-0400-562c-8cd0-0e859368f43a.json"
+   },
+   {
+    "path": "result.json",
+    "sha256": "fdcd62f86bafabb089dcada9da6fd12d6a73e2b940c3a61a8e7d550e96d02e2f",
+    "size_bytes": 1053,
+    "key": "runs/openfold3/op-faddadb6df10e40f/result.json"
+   }
+  ]
+ },
+ "progress": {
+  "schema": "scientific-ai/progress/v1",
+  "updated_at": null,
+  "current_step_id": null,
+  "steps": [
+   {
+    "step_id": "delivered_calls",
+    "command": null,
+    "state": "completed",
+    "unit": "call",
+    "initial_step": null,
+    "target_step": null,
+    "observed_step": null,
+    "durable_step": null,
+    "timestep_ps": null,
+    "completed_ns": null,
+    "durable_completed_ns": null,
+    "target_ns": null,
+    "ns_per_day": null,
+    "ns_per_day_source": null,
+    "completed_units": 1.0,
+    "durable_completed_units": 1.0,
+    "target_units": null,
+    "rate": null,
+    "rate_unit": null,
+    "rate_source": null,
+    "rate_window_seconds": null,
+    "observed_at": null,
+    "durable_at": null,
+    "rate_updated_at": null
+   },
+   {
+    "step_id": "structures",
+    "command": null,
+    "state": "completed",
+    "unit": "structure",
+    "initial_step": null,
+    "target_step": null,
+    "observed_step": null,
+    "durable_step": null,
+    "timestep_ps": null,
+    "completed_ns": null,
+    "durable_completed_ns": null,
+    "target_ns": null,
+    "ns_per_day": null,
+    "ns_per_day_source": null,
+    "completed_units": null,
+    "durable_completed_units": null,
+    "target_units": null,
+    "rate": null,
+    "rate_unit": null,
+    "rate_source": null,
+    "rate_window_seconds": null,
+    "observed_at": null,
+    "durable_at": null,
+    "rate_updated_at": null
+   }
+  ],
+  "available": true,
+  "stale": false,
+  "stale_after_seconds": null,
+  "source": "verified-delivery"
+ },
+ "execution": "async"
+}

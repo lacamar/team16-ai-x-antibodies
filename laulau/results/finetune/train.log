@@ -1,0 +1,96 @@
+[11:54:56] device=cuda autocast=torch.bfloat16 seed=0
+[11:54:56] data counts: {"train": {"low": 157238, "medium": 184213, "high": 166897, "total": 508348}, "val": {"low": 2474, "medium": 2899, "high": 2626, "total": 7999}, "test": {"low": 2474, "medium": 2899, "high": 2626, "total": 7999}}
+[11:54:58] model=IgLM params=12,889,600
+[11:55:00] baseline (pretrained IgLM): val_nll_low=3.3749 val_nll_medium=3.3348 val_nll_high=3.1137 val_nll_weighted=3.1758 val_ppl_high=22.5051 separation=0.2611
+[11:55:23] step 500/119130 ep0 train=1.8780 val_high=1.5779 val_low=2.0527 sep=+0.4748 ppl_high=4.845 IMPROVED
+[11:55:45] step 1000/119130 ep0 train=1.6496 val_high=1.5246 val_low=1.9885 sep=+0.4640 ppl_high=4.593 IMPROVED
+[11:56:08] step 1500/119130 ep0 train=1.6064 val_high=1.4937 val_low=1.9586 sep=+0.4649 ppl_high=4.453 IMPROVED
+[11:56:30] step 2000/119130 ep0 train=1.5804 val_high=1.4774 val_low=1.9609 sep=+0.4834 ppl_high=4.382 IMPROVED
+[11:56:52] step 2500/119130 ep0 train=1.5663 val_high=1.4599 val_low=1.9221 sep=+0.4622 ppl_high=4.306 IMPROVED
+[11:57:15] step 3000/119130 ep0 train=1.5497 val_high=1.4469 val_low=1.9130 sep=+0.4661 ppl_high=4.250 IMPROVED
+[11:57:38] step 3500/119130 ep0 train=1.5363 val_high=1.4374 val_low=1.9000 sep=+0.4627 ppl_high=4.210 IMPROVED
+[11:58:00] step 4000/119130 ep1 train=1.5299 val_high=1.4269 val_low=1.8973 sep=+0.4705 ppl_high=4.166 IMPROVED
+[11:58:23] step 4500/119130 ep1 train=1.5099 val_high=1.4214 val_low=1.8891 sep=+0.4677 ppl_high=4.143 IMPROVED
+[11:58:45] step 5000/119130 ep1 train=1.5074 val_high=1.4166 val_low=1.8766 sep=+0.4600 ppl_high=4.123 IMPROVED
+[11:59:08] step 5500/119130 ep1 train=1.5029 val_high=1.4113 val_low=1.8705 sep=+0.4592 ppl_high=4.101 IMPROVED
+[11:59:31] step 6000/119130 ep1 train=1.4981 val_high=1.4043 val_low=1.8699 sep=+0.4656 ppl_high=4.073 IMPROVED
+[11:59:53] step 6500/119130 ep1 train=1.4943 val_high=1.4073 val_low=1.8576 sep=+0.4503 ppl_high=4.085 no-improve x1
+[12:00:16] step 7000/119130 ep1 train=1.4920 val_high=1.3988 val_low=1.8477 sep=+0.4488 ppl_high=4.051 IMPROVED
+[12:00:38] step 7500/119130 ep1 train=1.4834 val_high=1.3954 val_low=1.8538 sep=+0.4584 ppl_high=4.037 IMPROVED
+[12:01:01] step 8000/119130 ep2 train=1.4805 val_high=1.3879 val_low=1.8557 sep=+0.4678 ppl_high=4.006 IMPROVED
+[12:01:23] step 8500/119130 ep2 train=1.4670 val_high=1.3865 val_low=1.8542 sep=+0.4677 ppl_high=4.001 IMPROVED
+[12:01:46] step 9000/119130 ep2 train=1.4677 val_high=1.3872 val_low=1.8317 sep=+0.4446 ppl_high=4.003 no-improve x1
+[12:02:08] step 9500/119130 ep2 train=1.4648 val_high=1.3823 val_low=1.8460 sep=+0.4638 ppl_high=3.984 IMPROVED
+[12:02:31] step 10000/119130 ep2 train=1.4624 val_high=1.3807 val_low=1.8436 sep=+0.4629 ppl_high=3.978 IMPROVED
+[12:02:54] step 10500/119130 ep2 train=1.4604 val_high=1.3813 val_low=1.8246 sep=+0.4433 ppl_high=3.980 no-improve x1
+[12:03:16] step 11000/119130 ep2 train=1.4554 val_high=1.3816 val_low=1.8260 sep=+0.4444 ppl_high=3.981 no-improve x2
+[12:03:39] step 11500/119130 ep2 train=1.4570 val_high=1.3740 val_low=1.8298 sep=+0.4558 ppl_high=3.951 IMPROVED
+[12:04:01] step 12000/119130 ep3 train=1.4528 val_high=1.3800 val_low=1.8301 sep=+0.4501 ppl_high=3.975 no-improve x1
+[12:04:24] step 12500/119130 ep3 train=1.4394 val_high=1.3771 val_low=1.8311 sep=+0.4540 ppl_high=3.963 no-improve x2
+[12:04:46] step 13000/119130 ep3 train=1.4401 val_high=1.3755 val_low=1.8143 sep=+0.4388 ppl_high=3.957 no-improve x3
+[12:05:09] step 13500/119130 ep3 train=1.4419 val_high=1.3736 val_low=1.8101 sep=+0.4365 ppl_high=3.950 IMPROVED
+[12:05:31] step 14000/119130 ep3 train=1.4409 val_high=1.3699 val_low=1.8212 sep=+0.4512 ppl_high=3.935 IMPROVED
+[12:05:54] step 14500/119130 ep3 train=1.4417 val_high=1.3686 val_low=1.8130 sep=+0.4444 ppl_high=3.930 IMPROVED
+[12:06:12] step 15000/119130 ep3 train=1.4374 val_high=1.3658 val_low=1.8055 sep=+0.4397 ppl_high=3.919 IMPROVED
+[12:06:22] step 15500/119130 ep3 train=1.4352 val_high=1.3675 val_low=1.8044 sep=+0.4369 ppl_high=3.926 no-improve x1
+[12:06:31] step 16000/119130 ep4 train=1.4327 val_high=1.3646 val_low=1.8153 sep=+0.4507 ppl_high=3.914 IMPROVED
+[12:06:40] step 16500/119130 ep4 train=1.4206 val_high=1.3676 val_low=1.8113 sep=+0.4438 ppl_high=3.926 no-improve x1
+[12:06:49] step 17000/119130 ep4 train=1.4217 val_high=1.3657 val_low=1.8031 sep=+0.4374 ppl_high=3.918 no-improve x2
+[12:06:59] step 17500/119130 ep4 train=1.4257 val_high=1.3614 val_low=1.7992 sep=+0.4378 ppl_high=3.902 IMPROVED
+[12:07:08] step 18000/119130 ep4 train=1.4218 val_high=1.3618 val_low=1.8048 sep=+0.4430 ppl_high=3.903 no-improve x1
+[12:07:18] step 18500/119130 ep4 train=1.4229 val_high=1.3604 val_low=1.7942 sep=+0.4339 ppl_high=3.898 IMPROVED
+[12:07:32] step 19000/119130 ep4 train=1.4219 val_high=1.3576 val_low=1.7913 sep=+0.4336 ppl_high=3.887 IMPROVED
+[12:07:45] step 19500/119130 ep4 train=1.4220 val_high=1.3590 val_low=1.7999 sep=+0.4409 ppl_high=3.892 no-improve x1
+[12:07:59] step 20000/119130 ep5 train=1.4185 val_high=1.3573 val_low=1.7982 sep=+0.4409 ppl_high=3.886 IMPROVED
+[12:08:13] step 20500/119130 ep5 train=1.4060 val_high=1.3596 val_low=1.8034 sep=+0.4437 ppl_high=3.895 no-improve x1
+[12:08:28] step 21000/119130 ep5 train=1.4066 val_high=1.3582 val_low=1.7827 sep=+0.4245 ppl_high=3.889 no-improve x2
+[12:08:42] step 21500/119130 ep5 train=1.4098 val_high=1.3586 val_low=1.7965 sep=+0.4379 ppl_high=3.891 no-improve x3
+[12:08:57] step 22000/119130 ep5 train=1.4102 val_high=1.3559 val_low=1.7861 sep=+0.4302 ppl_high=3.880 IMPROVED
+[12:09:12] step 22500/119130 ep5 train=1.4091 val_high=1.3530 val_low=1.7871 sep=+0.4342 ppl_high=3.869 IMPROVED
+[12:09:26] step 23000/119130 ep5 train=1.4107 val_high=1.3546 val_low=1.7858 sep=+0.4312 ppl_high=3.875 no-improve x1
+[12:09:40] step 23500/119130 ep5 train=1.4091 val_high=1.3517 val_low=1.7823 sep=+0.4306 ppl_high=3.864 IMPROVED
+[12:09:55] step 24000/119130 ep6 train=1.4048 val_high=1.3533 val_low=1.7835 sep=+0.4302 ppl_high=3.870 no-improve x1
+[12:10:09] step 24500/119130 ep6 train=1.3962 val_high=1.3557 val_low=1.7814 sep=+0.4257 ppl_high=3.880 no-improve x2
+[12:10:23] step 25000/119130 ep6 train=1.3955 val_high=1.3533 val_low=1.7855 sep=+0.4322 ppl_high=3.870 no-improve x3
+[12:10:38] step 25500/119130 ep6 train=1.4000 val_high=1.3525 val_low=1.7856 sep=+0.4331 ppl_high=3.867 no-improve x4
+[12:10:52] step 26000/119130 ep6 train=1.3983 val_high=1.3543 val_low=1.7699 sep=+0.4156 ppl_high=3.874 no-improve x5
+[12:11:06] step 26500/119130 ep6 train=1.3956 val_high=1.3494 val_low=1.7859 sep=+0.4365 ppl_high=3.855 IMPROVED
+[12:11:21] step 27000/119130 ep6 train=1.4019 val_high=1.3510 val_low=1.7782 sep=+0.4272 ppl_high=3.861 no-improve x1
+[12:11:36] step 27500/119130 ep6 train=1.4003 val_high=1.3464 val_low=1.7767 sep=+0.4304 ppl_high=3.844 IMPROVED
+[12:11:50] step 28000/119130 ep7 train=1.3899 val_high=1.3487 val_low=1.7779 sep=+0.4292 ppl_high=3.853 no-improve x1
+[12:12:05] step 28500/119130 ep7 train=1.3838 val_high=1.3506 val_low=1.7774 sep=+0.4268 ppl_high=3.860 no-improve x2
+[12:12:19] step 29000/119130 ep7 train=1.3869 val_high=1.3505 val_low=1.7795 sep=+0.4290 ppl_high=3.859 no-improve x3
+[12:12:33] step 29500/119130 ep7 train=1.3884 val_high=1.3475 val_low=1.7740 sep=+0.4265 ppl_high=3.848 no-improve x4
+[12:12:44] step 30000/119130 ep7 train=1.3895 val_high=1.3526 val_low=1.7789 sep=+0.4262 ppl_high=3.868 no-improve x5
+[12:12:53] step 30500/119130 ep7 train=1.3895 val_high=1.3519 val_low=1.7745 sep=+0.4225 ppl_high=3.865 no-improve x6
+[12:13:03] step 31000/119130 ep7 train=1.3901 val_high=1.3483 val_low=1.7699 sep=+0.4216 ppl_high=3.851 no-improve x7
+[12:13:12] step 31500/119130 ep7 train=1.3916 val_high=1.3479 val_low=1.7617 sep=+0.4138 ppl_high=3.849 no-improve x8
+[12:13:21] step 32000/119130 ep8 train=1.3820 val_high=1.3524 val_low=1.7697 sep=+0.4172 ppl_high=3.867 no-improve x9
+[12:13:30] step 32500/119130 ep8 train=1.3735 val_high=1.3519 val_low=1.7704 sep=+0.4185 ppl_high=3.865 no-improve x10
+[12:13:39] step 33000/119130 ep8 train=1.3798 val_high=1.3504 val_low=1.7600 sep=+0.4095 ppl_high=3.859 no-improve x11
+[12:13:49] step 33500/119130 ep8 train=1.3787 val_high=1.3505 val_low=1.7692 sep=+0.4187 ppl_high=3.859 no-improve x12
+[12:13:58] step 34000/119130 ep8 train=1.3804 val_high=1.3470 val_low=1.7644 sep=+0.4174 ppl_high=3.846 no-improve x13
+[12:14:07] step 34500/119130 ep8 train=1.3814 val_high=1.3458 val_low=1.7636 sep=+0.4178 ppl_high=3.841 IMPROVED
+[12:14:16] step 35000/119130 ep8 train=1.3834 val_high=1.3475 val_low=1.7650 sep=+0.4175 ppl_high=3.848 no-improve x1
+[12:14:26] step 35500/119130 ep8 train=1.3820 val_high=1.3438 val_low=1.7607 sep=+0.4169 ppl_high=3.834 IMPROVED
+[12:14:35] step 36000/119130 ep9 train=1.3746 val_high=1.3495 val_low=1.7711 sep=+0.4216 ppl_high=3.856 no-improve x1
+[12:14:44] step 36500/119130 ep9 train=1.3687 val_high=1.3474 val_low=1.7655 sep=+0.4181 ppl_high=3.848 no-improve x2
+[12:14:53] step 37000/119130 ep9 train=1.3710 val_high=1.3494 val_low=1.7659 sep=+0.4165 ppl_high=3.855 no-improve x3
+[12:15:03] step 37500/119130 ep9 train=1.3694 val_high=1.3489 val_low=1.7654 sep=+0.4166 ppl_high=3.853 no-improve x4
+[12:15:12] step 38000/119130 ep9 train=1.3732 val_high=1.3474 val_low=1.7626 sep=+0.4152 ppl_high=3.847 no-improve x5
+[12:15:21] step 38500/119130 ep9 train=1.3752 val_high=1.3460 val_low=1.7594 sep=+0.4134 ppl_high=3.842 no-improve x6
+[12:15:30] step 39000/119130 ep9 train=1.3729 val_high=1.3466 val_low=1.7576 sep=+0.4110 ppl_high=3.844 no-improve x7
+[12:15:39] step 39500/119130 ep9 train=1.3751 val_high=1.3471 val_low=1.7639 sep=+0.4169 ppl_high=3.846 no-improve x8
+[12:15:49] step 40000/119130 ep10 train=1.3662 val_high=1.3494 val_low=1.7600 sep=+0.4105 ppl_high=3.855 no-improve x9
+[12:15:58] step 40500/119130 ep10 train=1.3601 val_high=1.3494 val_low=1.7472 sep=+0.3978 ppl_high=3.855 no-improve x10
+[12:16:07] step 41000/119130 ep10 train=1.3631 val_high=1.3502 val_low=1.7654 sep=+0.4152 ppl_high=3.858 no-improve x11
+[12:16:16] step 41500/119130 ep10 train=1.3662 val_high=1.3472 val_low=1.7553 sep=+0.4081 ppl_high=3.847 no-improve x12
+[12:16:25] step 42000/119130 ep10 train=1.3657 val_high=1.3480 val_low=1.7554 sep=+0.4074 ppl_high=3.850 no-improve x13
+[12:16:35] step 42500/119130 ep10 train=1.3656 val_high=1.3469 val_low=1.7583 sep=+0.4114 ppl_high=3.845 no-improve x14
+[12:16:44] step 43000/119130 ep10 train=1.3672 val_high=1.3465 val_low=1.7539 sep=+0.4075 ppl_high=3.844 no-improve x15
+[12:16:53] step 43500/119130 ep10 train=1.3687 val_high=1.3465 val_low=1.7475 sep=+0.4010 ppl_high=3.844 no-improve x16
+[12:17:02] step 44000/119130 ep11 train=1.3577 val_high=1.3509 val_low=1.7592 sep=+0.4084 ppl_high=3.861 no-improve x17
+[12:17:11] step 44500/119130 ep11 train=1.3546 val_high=1.3504 val_low=1.7624 sep=+0.4120 ppl_high=3.859 no-improve x18
+[12:17:21] step 45000/119130 ep11 train=1.3564 val_high=1.3495 val_low=1.7492 sep=+0.3997 ppl_high=3.855 no-improve x19
+[12:17:30] step 45500/119130 ep11 train=1.3563 val_high=1.3485 val_low=1.7567 sep=+0.4082 ppl_high=3.851 no-improve x20
+[12:17:30] summary: {"stop_reason": "early_stopping", "steps": 45500, "total_steps_planned": 119130, "elapsed_s": 1350.026546239853, "elapsed_h": 0.3750073739555147, "best_val_nll_high": 1.343838095664978, "best_step": 35500, "baseline_val_nll_high": 3.113743782043457, "improvement": 1.769905686378479, "best_checkpoint": "runs/finetune/best"}

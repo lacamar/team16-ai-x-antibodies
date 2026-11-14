@@ -1,0 +1,33 @@
+# --- secrets: never commit (hackathon hard rule) ---
+*.private.json
+credentials*.json
+*.pem
+*.key
+
+# --- environments ---
+.venv/
+__pycache__/
+*.pyc
+
+# --- bulk data: downloaded from s3://apheris-oslo-hackathon/data/, not ours to vendor ---
+data/
+*.zip
+*.tar
+*.tar.zst
+
+# --- regenerable structures (seeds + exact docker commands are in NOTES.md) ---
+runs/prod100/design/
+runs/**/tmp_ae/
+runs/prod100/fold_holo/**/*.cif
+runs/fold_shell/**/*.cif
+
+# keep curated final candidate structures
+!final/**/*.cif
+
+.DS_Store
+
+# --- lane B raw fetched artifacts: hash-named blobs, 21 MB.
+# Provenance kept as nebius-runs/<label>.json (op ids) + derived results/*.csv;
+# re-fetch with: forge.py fetch <op-id> --dest <dir>
+nebius-runs/*-out/
+nebius-runs/inputs/

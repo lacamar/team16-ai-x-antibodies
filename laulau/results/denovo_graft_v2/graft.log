@@ -1,0 +1,10 @@
+[15:00:32] measured high binders (no Cys): 143142 distinct
+[15:01:23] model loops: 60000 chains -> 43022 distinct no-Cys CDRH3
+[15:01:24] corroborated (<=H2 to a measured high binder): 38425 (89.3% of model loops survive the veto)
+[15:01:36] novel frameworks: 904
+[15:01:36] de-novo designs: 48 (distinct loops, distinct novel frameworks)
+[15:23:04] measured high binders (no Cys): 143142 distinct
+[15:25:19] model loops: 60000 chains -> 43022 distinct no-Cys CDRH3
+[15:25:19] corroborated (<=H2 to a measured high binder): 38425 (89.3% of model loops survive the veto)
+[15:27:02] novel well-formed frameworks: 578
+[15:27:02] de-novo designs: 24 (distinct loops, distinct novel frameworks)

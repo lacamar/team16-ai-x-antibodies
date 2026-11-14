@@ -1,0 +1,5 @@
+query,of3_plddt,of3_iptm,of3_ptm,of3_confidence,of3_pde,chains
+BASELINE_trastuzumab,70.46,0.5345,0.673,0.5875,1.778,"['A', 'B', 'C', 'D']"
+champ_WGSQFFYHYE,58.33,0.2881,0.4855,0.3529,2.3849,"['A', 'B', 'C', 'D']"
+champ_WGSQPFYHYE,49.89,0.1508,0.3463,0.2152,2.9712,"['A', 'B', 'C', 'D']"
+champ_WGSQRFYHYE,66.39,0.4586,0.6219,0.5166,2.0261,"['A', 'B', 'C', 'D']"

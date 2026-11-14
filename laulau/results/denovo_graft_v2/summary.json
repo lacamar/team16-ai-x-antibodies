@@ -1,0 +1,12 @@
+{
+  "method": "measurement-vetoed graft: our-model loop (Hamming<=2 of a measured high binder) on a pretrained novel framework",
+  "measured_high_binders": 143142,
+  "model_loops": 43022,
+  "corroborated_loops": 38425,
+  "corroboration_survival_rate": 0.8931,
+  "designs": 24,
+  "identity_min": 0.4874,
+  "identity_median": 0.5558,
+  "mean_p_high_reference": 0.8223,
+  "caveats": "identity vs trastuzumab only (necessary proxy; abguard is arbiter). The loop was measured in trastuzumab's framework; grafting may change binding -- co-fold (stage 3, Boltz) with trastuzumab + decoy controls is the final rank."
+}
