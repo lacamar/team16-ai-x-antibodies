@@ -2,19 +2,19 @@
 
 **AI × Antibodies Hackathon, Oslo, 14 Nov 2026. Team 16.**
 
-Antibody binders against **HER2** that beat trastuzumab in silico. We fine-tune an antibody language model on a HER2 screen, then loop it: propose, score, fold, retrain.
+Antibody binders against **HER2** that beat trastuzumab in silico. We fine-tune an antibody language model on a HER2 screen and run it in a loop, each cycle retraining on its own best designs.
 
 ![Designed binder docked to HER2](docs/figures/hero.png)
 
-> A designed binder (VL blue · VH with the redesigned CDRH3 violet) gripping HER2 domain IV (orange) at trastuzumab's epitope hotspots C572/C573/D591/D593 (red). Co-folded with Boltz-2.
+> A designed binder (VL blue · VH with the redesigned CDRH3 violet) bound to HER2 domain IV (orange) at trastuzumab's epitope hotspots C572/C573/D591/D593 (red), co-folded with Boltz-2.
 
 ---
 
 ## The idea
 
-Most antibody tools rank designs by **fold confidence** (ipTM). That is not affinity. On this target, ipTM tracks measured SPR affinity at **Spearman 0.285** across a 600,000-fold K_D range, so we do not rank on it.
+Most antibody tools rank designs by **fold confidence** (ipTM), but that doesn't measure how tightly a binder actually sticks. On this target, ipTM tracks measured SPR affinity at **Spearman 0.285** across a 600,000-fold K_D range, so we do not rank on it.
 
-We **fine-tune [IgLM](https://github.com/Graylab/IgLM) on a 524,346-variant HER2 FACS screen**, then run a loop. The model proposes loops, a surrogate scores them, the best are co-folded against HER2, and the winners retrain the model. Six cycles. Fold confidence stays on only as a geometry gate.
+We **fine-tune [IgLM](https://github.com/Graylab/IgLM) on a 524,346-variant HER2 FACS screen**, then run it in a loop for six cycles. The model proposes loops, a surrogate scores them, the best are co-folded against HER2, and the winners retrain the model. We keep fold confidence only as a geometry gate.
 
 ## The loop
 
@@ -57,11 +57,11 @@ By cycle 6, **16 of 24** candidates beat trastuzumab on at least 2 of 3 computed
 | **Holds together** | developability / stability heuristic | clean flags |
 | **Real, buildable shape** | Boltz-2 **and** OpenFold3 agree on the fold | both high |
 
-Every number here is a **prediction**. The bench is the test. See [`DECISIONS.md`](DECISIONS.md) for the decision/rejected/why/evidence trail and [`docs/report.md`](docs/report.md) for the run.
+Every number here is a **prediction**, and none of it is settled until the designs are built and tested at the bench. See [`DECISIONS.md`](DECISIONS.md) for the decision/rejected/why/evidence trail and [`docs/report.md`](docs/report.md) for the run.
 
 ## Explore the designs
 
-A self-contained 3D viewer of the shortlist (18 complexes) lives in [`viz/`](viz/):
+A self-contained 3D viewer of the shortlist (18 complexes) is in [`viz/`](viz/):
 
 ```bash
 cd viz && python3 -m http.server   # then open dashboard.html
@@ -88,7 +88,7 @@ just pipeline all      # end-to-end (see docs/VM-RUN.md)
 just rank-all metrics  # Boltz-2 metrics → ranked top-20
 ```
 
-Deps resolve from `requirements.txt` via `uv`. Weights and seeds are pinned; every number traces to a run id.
+Deps resolve from `requirements.txt` via `uv`. Weights and seeds are pinned, and every number traces to a run id.
 
 ## Caveats
 
