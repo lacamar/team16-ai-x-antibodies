@@ -115,3 +115,14 @@ Dependencies resolve from `requirements.txt` through `uv`. Weights and seeds are
 | Alisher Ubaydolla | | [Alihimik](https://github.com/Alihimik) |
 | Laurenz Wicke | [laurenz-wicke](https://www.linkedin.com/in/laurenz-wicke-b9744b366/) | [Ltwicke](https://github.com/Ltwicke) |
 | Nguyen Ngoc Lan | [lan-ngoc-nguyen](https://www.linkedin.com/in/lan-ngoc-nguyen/) | [lanngoc10a](https://github.com/lanngoc10a) |
+
+## Acknowledgements
+
+The whole thing was built in a day at BI Norwegian Business School, at a hackathon organised by Nucleate Norway for around 80 people. The compute and the models came from the event partners:
+
+- Nebius: an NVIDIA H100 cloud machine for each team.
+- Apheris: the Foundry models and the HER2 design weights, run on that machine.
+- JapanFold: high-throughput structure prediction (Boltz-2, OpenFold3 and others).
+- Amass: research-intelligence credits.
+
+Claude accounts from Anthropic were provided for the teams to build with.
