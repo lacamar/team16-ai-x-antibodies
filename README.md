@@ -110,8 +110,8 @@ Dependencies resolve from `requirements.txt` through `uv`. Weights and seeds are
 
 | Name | LinkedIn | GitHub |
 |---|---|---|
-| Lachlan Marie | | [lacamar](https://github.com/lacamar) |
+| Lachlan Marie | [lachlan-marie](https://www.linkedin.com/in/lachlan-marie/) | [lacamar](https://github.com/lacamar) |
 | Nazmul Hoque | | |
-| Alisher Ubaydolla | | |
-| Laurenz | | |
-| Nguyen Ngoc Lan | | |
+| Alisher Ubaydolla | | [Alihimik](https://github.com/Alihimik) |
+| Laurenz Wicke | [laurenz-wicke](https://www.linkedin.com/in/laurenz-wicke-b9744b366/) | [Ltwicke](https://github.com/Ltwicke) |
+| Nguyen Ngoc Lan | [lan-ngoc-nguyen](https://www.linkedin.com/in/lan-ngoc-nguyen/) | [lanngoc10a](https://github.com/lanngoc10a) |
