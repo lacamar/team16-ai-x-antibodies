@@ -108,4 +108,10 @@ Dependencies resolve from `requirements.txt` through `uv`. Weights and seeds are
 
 ## Team 16
 
-Lachlan Marie · Nazmul Hoque · Alisher Ubaydolla · Laurenz · Nguyen Ngoc Lan
+| Name | LinkedIn | GitHub |
+|---|---|---|
+| Lachlan Marie | | [lacamar](https://github.com/lacamar) |
+| Nazmul Hoque | | |
+| Alisher Ubaydolla | | |
+| Laurenz | | |
+| Nguyen Ngoc Lan | | |
