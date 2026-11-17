@@ -1,6 +1,6 @@
 # team16-antibodies
 
-This is Team 16's project from the AI × Antibodies Hackathon in Oslo, held on 14 November 2026. The task set for the event was to design antibody binders against HER2, the receptor that the breast-cancer drug trastuzumab (Herceptin) targets, and to produce designs that look at least as good as trastuzumab itself on the measures available during the day.
+This is Team 16's project from the [AI × Antibodies Hackathon](https://luma.com/16qoctcz) in Oslo, organised by [Nucleate Norway](https://www.linkedin.com/company/nucleate-norway) and held on 14 November 2026. The task set for the event was to design antibody binders against HER2, the receptor that the breast-cancer drug trastuzumab (Herceptin) targets, and to produce designs that look at least as good as trastuzumab itself on the measures available during the day.
 
 Our approach was to teach an antibody-design model what a strong HER2 binder looks like, and then let it improve on its own designs over several rounds. The rest of this README explains how that works and the reasoning behind each choice.
 
