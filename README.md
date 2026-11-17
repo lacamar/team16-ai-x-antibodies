@@ -2,7 +2,7 @@
 
 This is Team 16's project from the [AI × Antibodies Hackathon](https://luma.com/16qoctcz) in Oslo, organised by [Nucleate Norway](https://www.linkedin.com/company/nucleate-norway) and held on 14 November 2026. The task set for the event was to design antibody binders against HER2, the receptor that the breast-cancer drug trastuzumab (Herceptin) targets, and to produce designs that look at least as good as trastuzumab itself on the measures available during the day.
 
-Our approach was to teach an antibody-design model what a strong HER2 binder looks like, and then let it improve on its own designs over several rounds. The rest of this README explains how that works and the reasoning behind each choice.
+Our approach was to teach an antibody-design model, [IgLM](https://github.com/Graylab/IgLM), what a strong HER2 binder looks like, and then let it improve on its own designs over several rounds. The rest of this README explains how that works and the reasoning behind each choice.
 
 ![A designed binder bound to HER2](docs/figures/hero.png)
 
@@ -18,7 +18,7 @@ We were able to check this directly, because the hackathon gave us real binding 
 
 ## How the method works
 
-We started from IgLM, a language model trained to generate antibody sequences, and fine-tuned it on a HER2 binding screen of 524,346 variants so that it leans toward sequences that bind this particular target. We then ran it in a loop, and each pass through the loop nudged the model to do a little better:
+We fine-tuned IgLM on a HER2 binding screen of 524,346 variants so that it leans toward sequences that bind this particular target. We then ran it in a loop, and each pass through the loop nudged the model to do a little better:
 
 1. The model proposes a large batch of new binding loops (the CDRH3 loop, the part of an antibody that does most of the gripping).
 2. A fast scorer, trained on the same binding data, estimates how strong each loop is likely to be and drops anything that is not novel or not developable.
