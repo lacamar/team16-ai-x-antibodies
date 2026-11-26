@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 
 const POLL = 15000
 
@@ -93,10 +93,29 @@ const COLS = [
   ['iptm', 'ipTM'], ['min_ipae', 'min iPAE'], ['stability', 'Stability'],
 ]
 
+function Structure({ run, id, cdrh3, onClose }) {
+  const ref = useRef(null)
+  useEffect(() => {
+    let viewer, dead = false
+    window.molstar.Viewer.create(ref.current, { layoutIsExpanded: false, layoutShowControls: false, layoutShowSequence: true })
+      .then(v => { if (dead) return v.dispose(); viewer = v; v.loadStructureFromUrl(`/api/cif?run=${run}&id=${id}`, 'mmcif') })
+    return () => { dead = true; viewer && viewer.dispose() }
+  }, [run, id])
+  return (
+    <div className="card">
+      <h2>Structure: <span className="mono">{cdrh3}</span> <span className="mut">{id}</span>
+        <button style={{ float: 'right' }} onClick={onClose}>close</button></h2>
+      <div ref={ref} style={{ position: 'relative', height: 480 }} />
+    </div>
+  )
+}
+
 function DesignsTable({ run }) {
   const { data: d, err, at } = useApi(run ? `/api/designs?run=${run}` : null, true)
   const [key, setKey] = useState('surrogate')
   const [asc, setAsc] = useState(false)
+  const [sd, setSd] = useState(null)
+  useEffect(() => setSd(null), [run])
   if (!run) return <div className="card">Select a run.</div>
   const rows = d ? [...d.designs].sort((a, b) => {
     const x = a[key], y = b[key]
@@ -114,7 +133,8 @@ function DesignsTable({ run }) {
       <div className="tw"><table>
         <thead><tr>{COLS.map(([k, l]) => <th key={k} onClick={() => click(k)}>{l}{k === key ? (asc ? ' ▲' : ' ▼') : ''}</th>)}</tr></thead>
         <tbody>{rows.map((r, i) => (
-          <tr key={r.id + r.cdrh3 + i} className={r.baseline ? 'base' : ''}>
+          <tr key={r.id + r.cdrh3 + i} className={(r.baseline ? 'base ' : '') + (sd && sd.id === r.id ? 'sel' : '')}
+            style={{ cursor: 'pointer' }} onClick={() => setSd(r)}>
             <td className="mono">{r.cdrh3}{r.baseline && ' (trastuzumab)'}{r.ood && ' *'}</td>
             <td title={r.novel_note}>{chip(r.novel ? 'novel' : 'known', r.novel ? 'good' : 'bad')}</td>
             <td>{chip(r.surrogate, tone(r.surrogate, 3, 2))}</td>
@@ -124,7 +144,8 @@ function DesignsTable({ run }) {
             <td>{chip(r.stability, tone(r.stability, 0.8, 0.5))}</td>
           </tr>))}</tbody>
       </table></div>
-      <p className="mut">* out-of-distribution length (surrogate trained on 9-10-mers). Hover novelty chip for reason.</p>
+      <p className="mut">* out-of-distribution length (surrogate trained on 9-10-mers). Hover novelty chip for reason. Click a row for its 3D structure.</p>
+      {sd && <Structure run={run} id={sd.id} cdrh3={sd.cdrh3} onClose={() => setSd(null)} />}
     </div>
   )
 }

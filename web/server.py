@@ -100,6 +100,13 @@ def cif_cdrh3s(run):
     return rows
 
 
+def cif_bytes(run, design_id):
+    for v in (run, design_id):
+        if not re.fullmatch(r"[\w.-]+", v):
+            raise ValueError("bad id")
+    return ssh(f"cat {RUNS}/{run}/design/generation/inference_samples/{design_id}/{design_id}_generated.cif", binary=True)
+
+
 def design_rows(run):
     if not re.fullmatch(r"[\w.-]+", run):
         raise ValueError("bad run")
@@ -140,6 +147,11 @@ class H(BaseHTTPRequestHandler):
             elif u.path == "/api/designs":
                 run = parse_qs(u.query).get("run", [""])[0]
                 body = cached(("designs", run), lambda: design_rows(run))
+            elif u.path == "/api/cif":
+                q = parse_qs(u.query)
+                run, did = q.get("run", [""])[0], q.get("id", [""])[0]
+                cif = cached(("cif-file", run, did), lambda: cif_bytes(run, did), 3600)
+                return self.reply_raw(200, cif, "chemical/x-cif")
             else:
                 return self.reply(404, {"error": "not found"})
             self.reply(200, body)
@@ -147,9 +159,11 @@ class H(BaseHTTPRequestHandler):
             self.reply(502, {"error": str(e)})
 
     def reply(self, code, body):
-        b = json.dumps(body).encode()
+        self.reply_raw(code, json.dumps(body).encode(), "application/json")
+
+    def reply_raw(self, code, b, ctype):
         self.send_response(code)
-        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Type", ctype)
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Content-Length", str(len(b)))
         self.end_headers()

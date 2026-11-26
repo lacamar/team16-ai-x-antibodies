@@ -25,4 +25,5 @@ td.mono{font-family:ui-monospace,monospace}
 .chip{border-radius:10px;padding:1px 8px;font-size:12px}
 .good{background:var(--gb);color:var(--g)}.mid{background:var(--ab);color:var(--a)}.bad{background:var(--rb);color:var(--r)}
 tr.base{outline:2px solid var(--ac);outline-offset:-2px}
+tbody tr.sel{background:var(--ab)}tbody tr:hover{background:var(--bd)}
 .err{color:var(--r)}

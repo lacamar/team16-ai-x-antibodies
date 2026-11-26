@@ -16,3 +16,6 @@ data/
 .beads-credential-key
 .beads/proxieddb/
 *.gate.lock*
+
+web/node_modules
+web/dist

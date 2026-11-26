@@ -133,7 +133,9 @@ def rank(cands, top_n=TOP_N):
             if not why:
                 ok, why = nf.hard_checks(seq)
                 why = "" if ok else why
-            ids = {k: identity(seq, s) for k, s in refs.items()}
+            qk = {seq[i:i + 3] for i in range(len(seq) - 2)}
+            near = sorted(refs, key=lambda k: -len(qk & {refs[k][i:i + 3] for i in range(len(refs[k]) - 2)}))[:40]  # k-mer prefilter; full alignment vs all refs is too slow
+            ids = {k: identity(seq, refs[k]) for k in near}
             top = max(ids, key=ids.get)
             hall = hallmarks(p["fr2"])
             if not why and hall < MIN_HALLMARKS:
